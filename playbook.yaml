@@ -16,7 +16,7 @@
      block:
       - name: Register the Regolith public key
         ansible.builtin.get_url:
-         url: https://regolith-desktop.org/register.key
+         url: https://regolith-desktop.org/regolith.key
          dest: /usr/share/keyrings/regolith-archive-keyring.gpg
 
       - name: Add the repository URL
