@@ -1,7 +1,7 @@
 ---
 - name: Setup
   hosts: localhost
-  
+
   tasks:
    - name: Ping my hosts
      ansible.builtin.ping:
@@ -16,11 +16,13 @@
      block:
       - name: Register the Regolith public key
         ansible.builtin.get_url:
-          url: https://regolith-desktop.org/register.key
-          dest: /usr/share/keyrings/regolith-archive-keyring.gpg
+         url: https://regolith-desktop.org/register.key
+         dest: /usr/share/keyrings/regolith-archive-keyring.gpg
 
       - name: Add the repository URL
         ansible.builtin.apt_repository:
-          filename: regolith.list
-          repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.gpg] https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main"
-          state: present
+         filename: regolith.list
+         repo: >
+           deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.gpg]
+           https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+         state: present
