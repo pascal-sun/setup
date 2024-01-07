@@ -25,16 +25,16 @@
          repo: >
            deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc]
            https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
-      
+
       - name: Update apt cache
         ansible.builtin.apt:
-         update_cache: yes
+         update_cache: true
 
       - name: Install Regolith
         ansible.builtin.package:
          name:
-           - regolith-desktop
-           - regolith-session-flashback
-           - regolith-look-nord
+          - regolith-desktop
+          - regolith-session-flashback
+          - regolith-look-nord
          state: present
      become: true
