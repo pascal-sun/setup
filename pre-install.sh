@@ -1,12 +1,14 @@
-#!/bin/bash
-set -euo pipefail
-IFS=$'\n\t'
-# http://redsymbol.net/articles/unofficial-bash-strict-mode/
+#!/bin/sh
 
-echo "[*] Installing pipx"
+GREEN="\e[32m"
+ENDCOLOR="\e[0m"
+
+echo -e "${GREEN}[*] Upgrading...${ENDCOLOR}"
 sudo apt-get update && sudo apt-get upgrade -y
+
+echo -e "${GREEN}[*] Installing pipx...${ENDCOLOR}"
 sudo apt-get install -y pipx
 pipx ensurepath
 
-echo "[*] Installing Ansible"
+echo -e "${GREEN}[*] Installing Ansible...${ENDCOLOR}"
 pipx install --include-deps ansible
