@@ -39,4 +39,3 @@
           - regolith-session-flashback
           - regolith-look-nord
          state: present
-     
