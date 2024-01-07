@@ -3,16 +3,9 @@
   hosts: localhost
 
   tasks:
-   - name: Ping my hosts
-     ansible.builtin.ping:
-
-   - name: Print message
-     ansible.builtin.debug:
-      msg: Hello world
-
-   # Install Regolith: https://regolith-desktop.com/docs/using-regolith/install/
 
    - name: Install Regolith
+     # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
      block:
       - name: Register the Regolith public key
         ansible.builtin.get_url:
@@ -38,3 +31,21 @@
           - regolith-look-nord
          state: present
      become: true
+     ignore_errors: true
+
+   - name: Install fish
+     # https://github.com/fish-shell/fish-shell#packages-for-linux
+     block:
+     - name: Add fish repository from PPA
+       ansible.builtin.apt_repository:
+        repo: ppa:fish-shell/release-3
+
+     - name: Update apt cache
+       ansible.builtin.apt:
+        update_cache: true
+
+     - name: Install fish
+       ansible.builtin.package:
+        name: fish
+        state: present
+     become: true   
