@@ -18,6 +18,7 @@
         ansible.builtin.get_url:
          url: https://regolith-desktop.org/regolith.key
          dest: /usr/share/keyrings/regolith-archive-keyring.gpg
+        become: true
 
       - name: Add the repository URL
         ansible.builtin.apt_repository:
