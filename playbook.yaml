@@ -18,6 +18,7 @@
         ansible.builtin.get_url:
          url: https://regolith-desktop.org/regolith.key
          dest: /usr/share/keyrings/regolith-archive-keyring.asc
+        become: true
 
       - name: Add the repository URL
         ansible.builtin.apt_repository:
@@ -25,6 +26,7 @@
          repo: >
            deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc]
            https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+        become: true
 
       - name: Update apt cache
         ansible.builtin.apt:
@@ -37,4 +39,4 @@
           - regolith-session-flashback
           - regolith-look-nord
          state: present
-     become: true
+     
