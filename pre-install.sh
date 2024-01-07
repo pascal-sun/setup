@@ -1,7 +1,7 @@
 #!/bin/sh
 
-GREEN="\e[32m"
-ENDCOLOR="\e[0m"
+GREEN="\033[32m"
+ENDCOLOR="\033[0m"
 
 echo -e "${GREEN}[*] Upgrading...${ENDCOLOR}"
 sudo apt-get update && sudo apt-get upgrade -y
