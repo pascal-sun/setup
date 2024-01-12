@@ -7,6 +7,7 @@
     - name: Install Regolith
       # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
       become: true
+      ignore_errors: true
       block:
         - name: Register the Regolith public key
           ansible.builtin.get_url:
@@ -51,6 +52,7 @@
             state: present
 
     - name: Default shell
+      become: true
       ansible.builtin.user:
         name: "{{ ansible_user_id }}"
         shell: /usr/bin/fish
