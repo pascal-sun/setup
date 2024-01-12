@@ -56,5 +56,5 @@
 
     - name: Set fish as default shell
       ansible.builtin.user:
-        name: {{ ansible_user_id }}
+        name: "{{ ansible_user_id }}"
         shell: fish
