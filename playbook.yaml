@@ -4,48 +4,57 @@
 
   tasks:
 
-   - name: Install Regolith
-     # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
-     block:
-      - name: Register the Regolith public key
-        ansible.builtin.get_url:
-         url: https://regolith-desktop.org/regolith.key
-         dest: /usr/share/keyrings/regolith-archive-keyring.asc
+    - name: Install Regolith
+      # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
+      block:
+        - name: Register the Regolith public key
+          ansible.builtin.get_url:
+            url: https://regolith-desktop.org/regolith.key
+            dest: /usr/share/keyrings/regolith-archive-keyring.asc
 
-      - name: Add the repository URL
-        ansible.builtin.apt_repository:
-         filename: regolith
-         repo: >
-           deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc]
-           https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+        - name: Add the repository URL
+          ansible.builtin.apt_repository:
+            filename: regolith
+            repo: >
+              deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc]
+              https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
 
-      - name: Update apt cache
-        ansible.builtin.apt:
-         update_cache: true
+        - name: Update apt cache
+          ansible.builtin.apt:
+            update_cache: true
 
-      - name: Install Regolith
-        ansible.builtin.package:
-         name:
-          - regolith-desktop
-          - regolith-session-flashback
-          - regolith-look-nord
-         state: present
-     become: true
-     ignore_errors: true
+        - name: Install Regolith
+          ansible.builtin.package:
+            name:
+              - regolith-desktop
+              - regolith-session-flashback
+              - regolith-look-nord
+            state: present
+      become: true
+      ignore_errors: true
 
-   - name: Install fish
-     # https://github.com/fish-shell/fish-shell#packages-for-linux
-     block:
-     - name: Add fish repository from PPA
-       ansible.builtin.apt_repository:
-        repo: ppa:fish-shell/release-3
+    - name: Install fish
+      # https://github.com/fish-shell/fish-shell#packages-for-linux
+      block:
+        - name: Add fish repository from PPA
+          ansible.builtin.apt_repository:
+            repo: ppa:fish-shell/release-3
 
-     - name: Update apt cache
-       ansible.builtin.apt:
-        update_cache: true
+        - name: Update apt cache
+          ansible.builtin.apt:
+            update_cache: true
 
-     - name: Install fish
-       ansible.builtin.package:
-        name: fish
-        state: present
-     become: true   
+        - name: Install fish
+          ansible.builtin.package:
+            name: fish
+            state: present
+      become: true
+
+    - name: Setup fish
+      ansible.builtin.command: which fish
+      register: fish
+
+    - name: Set fish as default shell
+      ansible.builtin.user:
+        name: {{ ansible_user_id }}
+        shell: fish
