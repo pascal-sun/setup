@@ -6,11 +6,13 @@
 
     - name: Install Regolith
       # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
+      become: true
       block:
         - name: Register the Regolith public key
           ansible.builtin.get_url:
             url: https://regolith-desktop.org/regolith.key
             dest: /usr/share/keyrings/regolith-archive-keyring.asc
+            mode: '0644'
 
         - name: Add the repository URL
           ansible.builtin.apt_repository:
@@ -30,11 +32,10 @@
               - regolith-session-flashback
               - regolith-look-nord
             state: present
-      become: true
-      ignore_errors: true
 
     - name: Install fish
       # https://github.com/fish-shell/fish-shell#packages-for-linux
+      become: true
       block:
         - name: Add fish repository from PPA
           ansible.builtin.apt_repository:
@@ -48,13 +49,8 @@
           ansible.builtin.package:
             name: fish
             state: present
-      become: true
 
-    - name: Setup fish
-      ansible.builtin.command: which fish
-      register: fish
-
-    - name: Set fish as default shell
+    - name: Default shell
       ansible.builtin.user:
         name: "{{ ansible_user_id }}"
-        shell: fish
+        shell: /usr/bin/fish
