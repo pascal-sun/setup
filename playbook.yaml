@@ -1,6 +1,7 @@
 ---
 - name: Setup
   hosts: localhost
+  become: no
 
   tasks:
 
