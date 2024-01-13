@@ -65,7 +65,7 @@
           ansible.builtin.lineinfile:
             name: "{{ ansible_env.HOME }}/.config/fish/fish_plugins"
             line: jorgebucaran/fisher
-          check_mode: yes
+          check_mode: true
           register: fisher
 
         - name: Download Fisher
@@ -79,7 +79,7 @@
           ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
           args:
             executable: /usr/bin/fish
-          changed_when: fisher is failed
+          when: fisher is failed
 
     - name: Add ~/.local/bin to PATH
       ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
