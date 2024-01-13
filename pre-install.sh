@@ -12,3 +12,6 @@ pipx ensurepath
 
 echo "${GREEN}[*] Installing Ansible...${ENDCOLOR}"
 pipx install --include-deps ansible
+
+echo "${GREEN}[*] Installing Ansible Galaxy Collections${ENDCOLOR}"
+ansible-galaxy collection install community.general
