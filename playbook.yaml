@@ -7,7 +7,6 @@
     - name: Install Regolith
       # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
       become: true
-      ignore_errors: true
       block:
         - name: Register the Regolith public key
           ansible.builtin.get_url:
@@ -22,17 +21,14 @@
               deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc]
               https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
 
-        - name: Update apt cache
-          ansible.builtin.apt:
-            update_cache: true
-
         - name: Install Regolith
-          ansible.builtin.package:
+          ansible.builtin.apt:
             name:
               - regolith-desktop
               - regolith-session-flashback
               - regolith-look-nord
             state: present
+            update_cache: true
 
     - name: Install fish
       # https://github.com/fish-shell/fish-shell#packages-for-linux
@@ -42,14 +38,11 @@
           ansible.builtin.apt_repository:
             repo: ppa:fish-shell/release-3
 
-        - name: Update apt cache
-          ansible.builtin.apt:
-            update_cache: true
-
         - name: Install fish
-          ansible.builtin.package:
+          ansible.builtin.apt:
             name: fish
             state: present
+            update_cache: true
 
         - name: Default shell
           ansible.builtin.user:
@@ -57,14 +50,20 @@
             shell: /usr/bin/fish
 
     - name: Install Fisher and plugins
+      # https://github.com/jorgebucaran/fisher#installation
       block:
         - name: Check if Fisher exists
           ansible.builtin.stat:
             path: "{{ ansible_env.HOME }}/.config/fish/functions/fisher.fish"
           register: fisher
 
-        - name: Install Fisher
-          ansible.builtin.shell: >
-            curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish |
-            source && fisher install jorgebucaran/fisher
+        - name: Download Fisher
+          ansible.builtin.get_url:
+            url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
+            dest: /tmp/fisher.fish
+            mode: "0644"
           when: not fisher.stat.exists
+
+        - name: Install Fisher
+          ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
+          changed_when: not fisher.stat.exists
