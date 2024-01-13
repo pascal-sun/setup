@@ -66,6 +66,7 @@
       ansible.builtin.shell: functions -q fisher
       args:
         executable: /usr/bin/fish
+      register: fisher
       changed_when: fisher.rc != 0
 
     - name: Debug
