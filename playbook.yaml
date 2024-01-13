@@ -19,7 +19,6 @@
       # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
       become: true
       when: "'regolith-desktop' not in ansible_facts.packages"
-      ignore_errors: true
       block:
         - name: Register the Regolith public key
           ansible.builtin.get_url:
@@ -61,11 +60,12 @@
             shell: /usr/bin/fish
 
     - name: Add ~/.local/bin to PATH
-      ansible.builtin.lineinfile:
-        path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
-        line: fish_add_path {{ ansible_env.HOME }}/.local/bin
-        create: true
-        mode: "0644"
+      ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
+      args:
+        executable: /usr/bin/fish
+      ignore_errors: true
+      register: ignore_errors_register
+      changed_when: ignore_errors_register.rc == 0
 
     - name: Check if Fisher exists
       ansible.builtin.shell: functions -q fisher
