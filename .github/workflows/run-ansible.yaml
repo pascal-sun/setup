@@ -9,9 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: ls -la
-      - run: pwd
       - name: Pre-install pipx and ansible
         run: sh pre-install.sh
       - name: Run ansible playbook
-        run: ansible-playbook playbook.yaml -vvv
+        run: ansible-playbook playbook.yaml -v
