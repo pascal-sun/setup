@@ -73,19 +73,14 @@
             url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
             dest: /tmp/fisher.fish
             mode: "0644"
-          when: fisher is failed
+          when: fisher is changed
 
         - name: Install Fisher
           ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
           args:
             executable: /usr/bin/fish
-          when: fisher is failed
           changed_when: false
-
-        - name: Debug
-          ansible.builtin.debug:
-            var: fisher
-            verbosity: 2
+          when: fisher is changed
 
     - name: Add ~/.local/bin to PATH
       ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
@@ -102,3 +97,9 @@
           - fd-find # simple, fast and user-friendly alternative to "find" (https://github.com/sharkdp/fd#on-ubuntu)
         state: present
         update_cache: true
+
+    - name: Add symlink for fd
+      ansible.builtin.file:
+        src: /usr/bin/fdfind
+        dest: ~/.local/bin/fd
+        state: link
