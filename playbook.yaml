@@ -28,7 +28,9 @@
         - name: Add the repository URL
           ansible.builtin.apt_repository:
             filename: regolith
-            repo: deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc] https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+            repo: >
+              deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.asc]
+              https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
         - name: Install Regolith
           ansible.builtin.apt:
             name:
@@ -63,7 +65,7 @@
       changed_when: local_bin_path.rc == 0
       ignore_errors: true
 
-    - name: fisher.fish
+    - name: Check fisher.fish plugin
       # https://github.com/jorgebucaran/fisher#installation
       block:
         - name: Check if Fisher plugin is installed
@@ -83,7 +85,7 @@
             executable: /usr/bin/fish
           changed_when: false
 
-    - name: fzf.fish
+    - name: Check fzf.fish plugin
       # https://github.com/PatrickF1/fzf.fish#installation
       block:
         - name: Check if fzf plugin is installed
@@ -104,12 +106,12 @@
         - name: Add symlink for fd
           ansible.builtin.file:
             src: /usr/bin/fdfind
-            dest: {{ ansible_env.HOME }}/.local/bin/fd
+            dest: "{{ ansible_env.HOME }}/.local/bin/fd"
             state: link
         - name: Add symlink for fd
           ansible.builtin.file:
             src: /usr/bin/batcat
-            dest: {{ ansible_env.HOME }}/.local/bin/bat
+            dest: "{{ ansible_env.HOME }}/.local/bin/bat"
             state: link
         - name: Install fzf plugin
           ansible.builtin.shell: fisher install PatrickF1/fzf.fish
