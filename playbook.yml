@@ -130,15 +130,15 @@
             name: nvim
             classic: true
           become: true
-        #- name: Create a font directory if it does not exist
-        #  ansible.builtin.file:
-        #    path: "{{ ansible_env.HOME }}/.local/share/fonts"
-        #    state: directory
-        #    mode: '0755'
-        - name: Install a Nerd Font
+        # - name: Create a font directory if it does not exist
+        #   ansible.builtin.file:
+        #     path: "{{ ansible_env.HOME }}/.local/share/fonts"
+        #     state: directory
+        #     mode: '0755'
+        - name: Install JetBrains Mono Nerd Font
           ansible.builtin.get_url:
             url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf
-            path: "{{ ansible_env.HOME }}/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf"
+            dest: "{{ ansible_env.HOME }}/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf"
             mode: "0644"
         - name: Clone a repo with separate git directory
           ansible.builtin.git:
