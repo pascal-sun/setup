@@ -80,6 +80,12 @@
           args:
             executable: /usr/bin/fish
           when: fisher is failed
+          changed_when: false
+
+        - name: Debug
+          ansible.builtin.debug:
+            var: fisher
+            verbosity: 2
 
     - name: Add ~/.local/bin to PATH
       ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
