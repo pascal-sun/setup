@@ -13,6 +13,7 @@ jobs:
         uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: playbook.yaml
+          options: -vv
       - name: Run the playbook for the 2nd time
         uses: dawidd6/action-ansible-playbook@v2
         with:

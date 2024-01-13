@@ -55,13 +55,13 @@
             name: "{{ ansible_user_id }}"
             shell: /usr/bin/fish
 
-    - name: Add ~/.local/bin to PATH
-      ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
-      args:
-        executable: /usr/bin/fish
-      register: local_bin_path
-      changed_when: local_bin_path.rc == 0
-      ignore_errors: true
+    # - name: Add ~/.local/bin to PATH
+    #   ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
+    #   args:
+    #     executable: /usr/bin/fish
+    #   register: local_bin_path
+    #   changed_when: local_bin_path.rc == 0
+    #   ignore_errors: true
 
     - name: Check fisher.fish plugin
       # https://github.com/jorgebucaran/fisher#installation
@@ -101,12 +101,19 @@
             state: present
             update_cache: true
           become: true
+        - name: fd path
+          ansible.builtin.shell: which fdfind
+          register: fdfind
+        - name: debug
+          ansible.builtin.debug:
+            var: fdfind
+            verbosity: 2
         - name: Add symlink for fd
           ansible.builtin.file:
             src: /usr/bin/fdfind
             dest: "{{ ansible_env.HOME }}/.local/bin/fd"
             state: link
-        - name: Add symlink for fd
+        - name: Add symlink for bat
           ansible.builtin.file:
             src: /usr/bin/batcat
             dest: "{{ ansible_env.HOME }}/.local/bin/bat"
