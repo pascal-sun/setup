@@ -66,12 +66,12 @@
           args:
             executable: /usr/bin/fish
           register: fisher
-          changed_when: fisher.rc != 2
+          changed_when: fisher.rc != 0
 
         - name: Debug
           ansible.builtin.debug:
             var: fisher
-            verbosity: 3
+            verbosity: 2
 
         - name: Download Fisher
           ansible.builtin.get_url:
