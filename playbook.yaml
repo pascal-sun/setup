@@ -100,7 +100,7 @@
               - bat # "cat" clone with syntax highlighting and git integration (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
             state: present
             update_cache: true
-            become: true
+          become: true
         - name: Add symlink for fd
           ansible.builtin.file:
             src: /usr/bin/fdfind
