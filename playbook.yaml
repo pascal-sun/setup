@@ -65,5 +65,7 @@
           when: not fisher.stat.exists
 
         - name: Install Fisher
-          ansible.builtin.shell: fish -c 'source /tmp/fisher.fish' && fisher install jorgebucaran/fisher
+          ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
+          args:
+            executable: /usr/bin/fish
           changed_when: not fisher.stat.exists
