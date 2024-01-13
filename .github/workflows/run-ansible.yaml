@@ -9,13 +9,6 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: ls -la
-      - run: pwd
       - uses: dawidd6/action-ansible-playbook@v2
         with:
-          # Required, playbook filepath
           playbook: playbook.yaml
-      - name: Pre-install pipx and ansible
-        run: sh pre-install.sh
-      - name: Run ansible playbook
-        run: ansible-playbook playbook.yaml -v
