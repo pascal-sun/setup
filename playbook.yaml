@@ -23,6 +23,7 @@
             mode: "0644"
 
         - name: Add the repository URL
+          ignore_errors: true
           ansible.builtin.apt_repository:
             filename: regolith
             repo: >
@@ -61,8 +62,10 @@
       # https://github.com/jorgebucaran/fisher#installation
       block:
         - name: Check if Fisher exists
-          ansible.builtin.stat:
-            path: "{{ ansible_env.HOME }}/.config/fish/functions/fisher.fish"
+          ansible.builtin.lineinfile:
+            name: "{{ ansible_env.HOME }}/.config/fish/fish_plugins"
+            line: jorgebucaran/fisher
+          check_mode: yes
           register: fisher
 
         - name: Download Fisher
@@ -70,13 +73,13 @@
             url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
             dest: /tmp/fisher.fish
             mode: "0644"
-          when: not fisher.stat.exists
+          when: fisher is failed
 
         - name: Install Fisher
           ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
           args:
             executable: /usr/bin/fish
-          changed_when: not fisher.stat.exists
+          changed_when: fisher is failed
 
     - name: Add ~/.local/bin to PATH
       ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
