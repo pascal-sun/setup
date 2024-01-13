@@ -100,7 +100,7 @@
             repo: https://github.com/junegunn/fzf.git
             version: "HEAD"  # noqa: latest
         - name: Install fzf
-          ansible.builtin.command: ".{{ ansible_env.HOME }}/.fzf/install"
+          ansible.builtin.command: "bash {{ ansible_env.HOME }}/.fzf/install"
           changed_when: false
 
         - name: Install prerequisites
