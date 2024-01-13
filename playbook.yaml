@@ -1,7 +1,6 @@
 ---
 - name: Setup
   hosts: localhost
-  become: no
 
   tasks:
 
@@ -52,8 +51,20 @@
             name: fish
             state: present
 
-    - name: Default shell
-      become: true
-      ansible.builtin.user:
-        name: "{{ ansible_user_id }}"
-        shell: /usr/bin/fish
+        - name: Default shell
+          ansible.builtin.user:
+            name: "{{ ansible_user_id }}"
+            shell: /usr/bin/fish
+
+    - name: Install Fisher and plugins
+      block:
+        - name: Check if Fisher exists
+          ansible.builtin.stat:
+            path: "{{ ansible_env.HOME }}/.config/fish/functions/fisher.fish"
+          register: fisher
+
+        - name: Install Fisher
+          ansible.builtin.shell: >
+            curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish |
+            source && fisher install jorgebucaran/fisher
+          when: not fisher.stat.exists
