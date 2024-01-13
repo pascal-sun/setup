@@ -65,6 +65,7 @@
         executable: /usr/bin/fish
       register: ignore_errors_register
       changed_when: ignore_errors_register.rc == 0
+      ignore_errors: true
 
     - name: Check if Fisher exists
       ansible.builtin.shell: functions -q fisher
