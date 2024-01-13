@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: dawidd6/action-ansible-playbook@v2
+      - name: Run the playbook for the 1st time
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: playbook.yaml
+      - name: Run the playbook for the 2nd time
+        uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: playbook.yaml
