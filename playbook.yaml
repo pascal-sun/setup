@@ -129,7 +129,7 @@
           community.general.snap:
             name: nvim
             classic: true
-            channel: beta
+            channel: latest/stable
         - name: Clone a repo with separate git directory
           ansible.builtin.git:
             depth: 1
