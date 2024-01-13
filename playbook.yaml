@@ -4,7 +4,7 @@
 
   tasks:
 
-    - name: Gather the package facts
+    - name: Gather package facts
       ansible.builtin.package_facts:
 
     - name: Install packages
@@ -62,34 +62,32 @@
             name: "{{ ansible_user_id }}"
             shell: /usr/bin/fish
 
+    - name: Check if Fisher exists
+      ansible.builtin.shell: functions -q fisher
+      args:
+        executable: /usr/bin/fish
+      changed_when: fisher.rc != 0
+
+    - name: Debug
+      ansible.builtin.debug:
+        var: fisher
+        verbosity: 2
+
     - name: Install Fisher
       # https://github.com/jorgebucaran/fisher#installation
+      when: fisher
       block:
-        - name: Check if Fisher exists
-          ansible.builtin.shell: functions -q fisher
-          args:
-            executable: /usr/bin/fish
-          register: fisher
-          changed_when: fisher.rc != 0
-
-        - name: Debug
-          ansible.builtin.debug:
-            var: fisher
-            verbosity: 2
-
         - name: Download Fisher
           ansible.builtin.get_url:
             url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
             dest: /tmp/fisher.fish
             mode: "0644"
-          when: fisher
 
         - name: Install Fisher
           ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
           args:
             executable: /usr/bin/fish
           changed_when: false
-          when: fisher
 
     - name: Add ~/.local/bin to PATH
       ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
