@@ -64,7 +64,8 @@
       ansible.builtin.lineinfile:
         path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
         line: fish_add_path {{ ansible_env.HOME }}/.local/bin
-        create: yes
+        create: true
+        mode: "0644"
 
     - name: Check if Fisher exists
       ansible.builtin.shell: functions -q fisher
