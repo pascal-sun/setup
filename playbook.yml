@@ -92,10 +92,20 @@
             executable: /usr/bin/fish
           changed_when: false
       rescue:
+        - name: Download fzf
+          # fuzzy finder (https://github.com/junegunn/fzf#using-linux-package-managers)
+          ansible.builtin.git:
+            depth: 1
+            dest: "{{ ansible_env.HOME }}/.fzf"
+            repo: https://github.com/junegunn/fzf.git
+            version: "HEAD"  # noqa: latest
+        - name: Install fzf
+          ansible.builtin.command: "./{{ ansible_env.HOME }}/.fzf/install"
+          changed_when: false
+
         - name: Install prerequisites
           ansible.builtin.apt:
             name:
-              - fzf # fuzzy finder (https://github.com/junegunn/fzf#using-linux-package-managers)
               - fd-find # simple, fast and user-friendly alternative to "find" (https://github.com/sharkdp/fd#on-ubuntu)
               - bat # "cat" clone with syntax highlighting and git integration (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
             state: present
