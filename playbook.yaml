@@ -63,26 +63,19 @@
       ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
       args:
         executable: /usr/bin/fish
-      register: ignore_errors_register
-      changed_when: ignore_errors_register.rc == 0
+      register: local_bin_path
+      changed_when: local_bin_path.rc == 0
       ignore_errors: true
 
-    - name: Check if Fisher exists
-      ansible.builtin.shell: functions -q fisher
-      args:
-        executable: /usr/bin/fish
-      register: fisher
-      changed_when: false
-
-    - name: Debug
-      ansible.builtin.debug:
-        var: fisher
-        verbosity: 2
-
-    - name: Install Fisher
+    - name: Fisher
       # https://github.com/jorgebucaran/fisher#installation
-      when: fisher.rc != 0
       block:
+        - name: Check if Fisher
+          ansible.builtin.shell: functions -q fisher
+          args:
+            executable: /usr/bin/fish
+          changed_when: false
+      rescue:
         - name: Download Fisher
           ansible.builtin.get_url:
             url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
@@ -94,7 +87,6 @@
           args:
             executable: /usr/bin/fish
           changed_when: false
-
 
     - name: Install fish's fzf
       # https://github.com/PatrickF1/fzf.fish#installation
