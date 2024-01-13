@@ -104,12 +104,12 @@
         - name: Add symlink for fd
           ansible.builtin.file:
             src: /usr/bin/fdfind
-            dest: ~/.local/bin/fd
+            dest: {{ ansible_env.HOME }}/.local/bin/fd
             state: link
         - name: Add symlink for fd
           ansible.builtin.file:
             src: /usr/bin/batcat
-            dest: ~/.local/bin/bat
+            dest: {{ ansible_env.HOME }}/.local/bin/bat
             state: link
         - name: Install fzf plugin
           ansible.builtin.shell: fisher install PatrickF1/fzf.fish
