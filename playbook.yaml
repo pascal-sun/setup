@@ -79,9 +79,10 @@
           changed_when: not fisher.stat.exists
 
     - name: Add ~/.local/bin to PATH
-      ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}.local/bin
+      ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
       args:
         executable: /usr/bin/fish
+      changed_when: false
 
     - name: Install fish's fzf
       # https://github.com/PatrickF1/fzf.fish#installation
