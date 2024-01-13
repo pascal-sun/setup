@@ -76,7 +76,7 @@
 
     - name: Install Fisher
       # https://github.com/jorgebucaran/fisher#installation
-      when: fisher
+      when: fisher.rc != 0
       block:
         - name: Download Fisher
           ansible.builtin.get_url:
