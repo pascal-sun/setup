@@ -4,6 +4,13 @@
 
   tasks:
 
+    - name: Install packages
+      become: true
+      ansible.builtin.apt:
+        name:
+          - curl
+        state: present
+
     - name: Install Regolith
       # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
       become: true
@@ -12,7 +19,7 @@
           ansible.builtin.get_url:
             url: https://regolith-desktop.org/regolith.key
             dest: /usr/share/keyrings/regolith-archive-keyring.asc
-            mode: '0644'
+            mode: "0644"
 
         - name: Add the repository URL
           ansible.builtin.apt_repository:
