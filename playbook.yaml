@@ -4,6 +4,9 @@
 
   tasks:
 
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+
     - name: Install packages
       become: true
       ansible.builtin.apt:
@@ -15,6 +18,8 @@
     - name: Install Regolith
       # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
       become: true
+      when: "'regolith-desktop' not in ansible_facts.packages"
+      ignore_errors: true
       block:
         - name: Register the Regolith public key
           ansible.builtin.get_url:
@@ -23,7 +28,6 @@
             mode: "0644"
 
         - name: Add the repository URL
-          ignore_errors: true
           ansible.builtin.apt_repository:
             filename: regolith
             repo: >
