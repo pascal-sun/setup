@@ -62,13 +62,17 @@
             name: "{{ ansible_user_id }}"
             shell: /usr/bin/fish
 
+    - name: Add ~/.local/bin to PATH
+      ansible.builtin.lineinfile:
+        path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+        line: fish_add_path {{ ansible_env.HOME }}/.local/bin
+
     - name: Check if Fisher exists
       ansible.builtin.shell: functions -q fisher
       args:
         executable: /usr/bin/fish
       register: fisher
       changed_when: false
-      failed_when: fisher.rc != 0
 
     - name: Debug
       ansible.builtin.debug:
@@ -77,7 +81,7 @@
 
     - name: Install Fisher
       # https://github.com/jorgebucaran/fisher#installation
-      when: fisher is failed
+      when: fisher.rc != 0
       block:
         - name: Download Fisher
           ansible.builtin.get_url:
@@ -91,11 +95,6 @@
             executable: /usr/bin/fish
           changed_when: false
 
-    - name: Add ~/.local/bin to PATH
-      ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
-      args:
-        executable: /usr/bin/fish
-      changed_when: false
 
     - name: Install fish's fzf
       # https://github.com/PatrickF1/fzf.fish#installation
