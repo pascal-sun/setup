@@ -1,5 +1,5 @@
 name: 🚀 Run Ansible Playbook
-run-name: 🚀 Run Ansible Playbook on ${{ inputs.deploy_target }}
+run-name: 🚀 Run Ansible Playbook
 on:
   push:
   workflow_dispatch:
@@ -8,6 +8,7 @@ jobs:
   run-ansible-playbook:
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v4
       - run: ls -la
       - run: pwd
       - name: Pre-install pipx and ansible
