@@ -101,10 +101,16 @@
             state: present
             update_cache: true
           become: true
-        - name: fd path
-          ansible.builtin.shell: which fdfind
+        - name: Create a directory if it does not exist
+          ansible.builtin.file:
+            path: "{{ ansible_env.HOME }}/.local/bin"
+            state: directory
+            mode: '0755'
+        - name: Check fd path
+          ansible.builtin.command: which fdfind
           register: fdfind
-        - name: debug
+          changed_when: false
+        - name: Debug
           ansible.builtin.debug:
             var: fdfind
             verbosity: 2
