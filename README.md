@@ -22,10 +22,9 @@ ansible-playbook playbook.yml --ask-become-pass
 - [ ] Burp Suite
 - [x] Slack
 - [ ] exegol
-- [ ] docker
+- [x] docker
 - [x] Signal
 - [x] Flameshot
-- [ ] ~~Libreoffice~~
 - [ ] Wireshark
 - [x] Spotify
 - [x] Obsidian

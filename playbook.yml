@@ -268,3 +268,31 @@
         deb: /tmp/obsidian.deb
       become: true
       when: not obsidian.stat.exists
+
+    - name: Check if docker is already installed
+      # https://docs.docker.com/desktop/install/ubuntu/
+      ansible.builtin.apt:
+        path: /usr/bin/docker
+      register: docker
+    - name: Install Docker official GPG key
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: "0644"
+      when: not docker.stat.exists
+    - name: Add the repository URL
+      ansible.builtin.apt_repository:
+        filename: docker
+        repo: deb [signed-by=/etc/apt/keyrings/docker.asc arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+      when: not docker.stat.exists
+    - name: Download the .deb package
+      ansible.builtin.get_url:
+        url: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.26.1-amd64.deb
+        dest: /tmp/docker-desktop.deb
+        mode: "0644"
+      when: not docker.stat.exists
+    - name: Install Docker
+      ansible.builtin.apt:
+        deb: /tmp/docker-desktop.deb
+      become: true
+      when: not docker.stat.exists
