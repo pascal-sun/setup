@@ -60,7 +60,7 @@
       args:
         executable: /usr/bin/fish
       register: local_bin_path
-      changed_when: local_bin_path.rc == 0
+      changed_when: false
       ignore_errors: true
 
     - name: Check fisher.fish plugin
