@@ -18,7 +18,7 @@ ansible-playbook playbook.yml --ask-become-pass
 ### Todo
 - [x] PyCharm, ~~Toolbox~~
 - [x] ~~Firefox~~ (already installed in Ubuntu 22.04), Chrome
-- [ ] mise (python, golang)
+- [x] mise (python, golang)
 - [ ] Burp Suite
 - [x] Slack
 - [ ] exegol
