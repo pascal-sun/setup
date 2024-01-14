@@ -56,8 +56,8 @@
       ansible.builtin.shell: fish_add_path {{ ansible_env.HOME }}/.local/bin
       args:
         executable: /usr/bin/fish
-      register: local_bin_path
-      changed_when: false
+      register: add_path
+      changed_when: add_path.rc == 0
       failed_when: false
 
     - name: Check if Fisher plugin is already installed
@@ -81,54 +81,57 @@
       changed_when: true
       when: fisher.rc != 0
 
-    - name: Check fzf.fish plugin
+    - name: Check if fzf plugin is installed
       # https://github.com/PatrickF1/fzf.fish#installation
-      block:
-        - name: Check if fzf plugin is installed
-          ansible.builtin.shell: fisher list fzf
-          args:
-            executable: /usr/bin/fish
-          changed_when: false
-      rescue:
-        - name: Download fzf
-          # fuzzy finder (https://github.com/junegunn/fzf#using-linux-package-managers)
-          ansible.builtin.git:
-            depth: 1
-            dest: "{{ ansible_env.HOME }}/.fzf"
-            repo: https://github.com/junegunn/fzf.git
-            version: "HEAD"  # noqa: latest
-        - name: Install fzf
-          ansible.builtin.command: "bash {{ ansible_env.HOME }}/.fzf/install"
-          changed_when: false
+      ansible.builtin.shell: fisher list fzf
+      args:
+        executable: /usr/bin/fish
+      register: fzf
+      changed_when: false
+      failed_when: false
 
-        - name: Install prerequisites
-          ansible.builtin.apt:
-            name:
-              - fd-find # simple, fast and user-friendly alternative to "find" (https://github.com/sharkdp/fd#on-ubuntu)
-              - bat # "cat" clone with syntax highlighting and git integration (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
-            state: present
-            update_cache: true
-          become: true
-        - name: Create a binary directory
-          ansible.builtin.file:
-            path: "{{ ansible_env.HOME }}/.local/bin"
-            state: directory
-            mode: '0755'
-        - name: Add symlink for fd
-          ansible.builtin.file:
-            src: /usr/bin/fdfind
-            dest: "{{ ansible_env.HOME }}/.local/bin/fd"
-            state: link
-        - name: Add symlink for bat
-          ansible.builtin.file:
-            src: /usr/bin/batcat
-            dest: "{{ ansible_env.HOME }}/.local/bin/bat"
-            state: link
-        - name: Install fzf plugin
-          ansible.builtin.shell: fisher install PatrickF1/fzf.fish
-          args:
-            executable: /usr/bin/fish
-          changed_when: false
+    - name: Download fzf
+      # fuzzy finder (https://github.com/junegunn/fzf#using-linux-package-managers)
+      ansible.builtin.git:
+        depth: 1
+        dest: "{{ ansible_env.HOME }}/.fzf"
+        repo: https://github.com/junegunn/fzf.git
+        version: "HEAD"  # noqa: latest
+
+    - name: Install fzf
+      ansible.builtin.command: "bash {{ ansible_env.HOME }}/.fzf/install"
+      changed_when: true
+      when: fzf.rc != 0
+
+    - name: Install prerequisites
+      ansible.builtin.apt:
+        name:
+          - fd-find # simple, fast and user-friendly alternative to "find" (https://github.com/sharkdp/fd#on-ubuntu)
+          - bat # "cat" clone with syntax highlighting and git integration (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
+        state: present
+        update_cache: true
+      become: true
+    - name: Create a binary directory
+      ansible.builtin.file:
+        path: "{{ ansible_env.HOME }}/.local/bin"
+        state: directory
+        mode: '0755'
+    - name: Add symlink for fd
+      ansible.builtin.file:
+        src: /usr/bin/fdfind
+        dest: "{{ ansible_env.HOME }}/.local/bin/fd"
+        state: link
+    - name: Add symlink for bat
+      ansible.builtin.file:
+        src: /usr/bin/batcat
+        dest: "{{ ansible_env.HOME }}/.local/bin/bat"
+        state: link
+    - name: Install fzf plugin
+      ansible.builtin.shell: fisher install PatrickF1/fzf.fish
+      args:
+        executable: /usr/bin/fish
+      register: result
+      changed_when: "'Installed 1 plugin/s' in result.stdout"
 
     - name: Install other fish plugins
       # done, receive notifications when long processes finish (https://github.com/franciscolourenco/done)
