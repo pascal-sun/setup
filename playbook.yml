@@ -249,3 +249,35 @@
             dangerous: true
             name: /tmp/obsidian.snap
           become: true
+
+    - name: Check if Obsidian is already installed
+      ansible.builtin.stat:
+        path: /usr/bin/obsidian
+      register: obsidian
+
+    - name: Find latest Obsidian release
+      ansible.builtin.uri:
+        url: https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest
+        return_content: true
+      register: obsidian_release
+      when: not obsidian.stat.exists
+
+    - name: Retrieve the download URL
+      vars:
+        deb_asset: "{{ obsidian_release.json.assets | selectattr('name', 'contains', 'amd64.deb') | join() }}"
+      ansible.builtin.set_fact:
+        browser_download_url: "{{ deb_asset.browser_download_url }}"
+      when: not obsidian.stat.exists
+
+    - name: Download Obsidian
+      ansible.builtin.get_url:
+        url: "{{ browser_download_url }}"
+        dest: /tmp/obsidian.deb
+        mode: "0644"
+      when: not obsidian.stat.exists
+
+    - name: Install Obsidian
+      ansible.builtin.apt:
+        deb: /tmp/obsidian.deb
+      become: true
+      when: not obsidian.stat.exists
