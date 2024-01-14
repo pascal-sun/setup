@@ -60,26 +60,26 @@
       changed_when: false
       failed_when: false
 
-    - name: Check fisher.fish plugin
+    - name: Check if Fisher plugin is already installed
       # https://github.com/jorgebucaran/fisher#installation
-      block:
-        - name: Check if Fisher plugin is installed
-          ansible.builtin.shell: functions -q fisher
-          args:
-            executable: /usr/bin/fish
-          changed_when: false
-          failed_when: false
-      rescue:
-        - name: Download Fisher plugin
-          ansible.builtin.get_url:
-            url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
-            dest: /tmp/fisher.fish
-            mode: "0644"
-        - name: Install Fisher plugin
-          ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
-          args:
-            executable: /usr/bin/fish
-          changed_when: false
+      ansible.builtin.shell: functions -q fisher
+      args:
+        executable: /usr/bin/fish
+      register: fisher
+      changed_when: false
+      failed_when: false
+    - name: Download Fisher plugin
+      ansible.builtin.get_url:
+        url: https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish
+        dest: /tmp/fisher.fish
+        mode: "0644"
+      when: fisher.rc != 0
+    - name: Install Fisher plugin
+      ansible.builtin.shell: source /tmp/fisher.fish && fisher install jorgebucaran/fisher
+      args:
+        executable: /usr/bin/fish
+      changed_when: true
+      when: fisher.rc != 0
 
     - name: Check fzf.fish plugin
       # https://github.com/PatrickF1/fzf.fish#installation
@@ -272,7 +272,7 @@
 
     - name: Check if docker is already installed
       # https://docs.docker.com/desktop/install/ubuntu/
-      ansible.builtin.apt:
+      ansible.builtin.stat:
         path: /usr/bin/docker
       register: docker
     - name: Install Docker official GPG key
