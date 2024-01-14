@@ -229,3 +229,22 @@
       community.general.snap:
         name: spotify
       become: true
+
+    - name: Install mise
+      # https://mise.jdx.dev/getting-started.html#apt
+      become: true
+      block:
+        - name: Install mise public signing key
+          ansible.builtin.get_url:
+            url: https://mise.jdx.dev/gpg-key.pub
+            dest: /etc/apt/keyrings/mise-archive-keyring.gpg
+            mode: "0644"
+        - name: Add the repository URL
+          ansible.builtin.apt_repository:
+            filename: mise
+            repo: deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main
+        - name: Install mise
+          ansible.builtin.apt:
+            name: mise
+            state: present
+            update_cache: true
