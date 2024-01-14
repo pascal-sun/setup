@@ -224,3 +224,8 @@
             classic: true
             dangerous: true
             name: /tmp/obsidian.snap
+
+    - name: Install Spotify
+      community.general.snap:
+        name: spotify
+      become: true

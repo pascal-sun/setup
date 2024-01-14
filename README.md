@@ -25,7 +25,7 @@ ansible-playbook playbook.yml --ask-become-pass
 - [ ] docker
 - [x] Signal
 - [x] Flameshot
-- [ ] Libreoffice
+- [ ] ~~Libreoffice~~
 - [ ] Wireshark
-- [ ] Spotify
-- [ ] Obsidian
+- [x] Spotify
+- [x] Obsidian
