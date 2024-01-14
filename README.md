@@ -5,12 +5,22 @@
 
 Ansible Playbook to setup my workstation
 
+### How to run it?
+
+```shell
+sudo apt install git
+git clone https://github.com/pascal-sun/setup.git
+cd setup
+./pre-install.sh
+ansible-playbook playbook.yml --ask-become-pass 
+```
+
 ### Todo
-- [ ] PyCharm, Toolbox
-- [ ] Firefox, Chrome
+- [x] PyCharm, ~~Toolbox~~
+- [x] ~~Firefox~~ (already installed in Ubuntu 22.04), Chrome
 - [ ] mise (python, golang)
 - [ ] Burp Suite
-- [ ] Slack
+- [x] Slack
 - [ ] exegol
 - [ ] docker
 - [ ] Signal

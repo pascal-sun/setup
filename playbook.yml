@@ -166,3 +166,40 @@
             dest: "{{ ansible_env.HOME }}/.config/nvim"
             repo: https://github.com/NvChad/NvChad
             version: "HEAD"  # noqa: latest
+
+    - name: Install PyCharm
+      community.general.snap:
+        classic: true
+        name: pycharm-professional
+      become: true
+
+    - name: Install Chromium
+      community.general.snap:
+        classic: true
+        name: chromium
+      become: true
+
+    - name: Install Slack
+      community.general.snap:
+        classic: true
+        name: slack
+      become: true
+
+    - name: Install Signal
+      # https://signal.org/fr/download/linux/
+      become: true
+      block:
+        - name: Install Signal official public software signing key
+          ansible.builtin.get_url:
+            url: https://updates.signal.org/desktop/apt/keys.asc
+            dest: /usr/share/keyrings/signal-desktop-keyring.gpg
+            mode: "0644"
+        - name: Add the repository URL
+          ansible.builtin.apt_repository:
+            filename: signal-xenial
+            repo: deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main
+        - name: Install Signal
+          ansible.builtin.apt:
+            name: signal-desktop
+            state: present
+            update_cache: true
