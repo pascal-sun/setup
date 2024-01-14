@@ -19,12 +19,12 @@
         - name: Register the Regolith public key
           ansible.builtin.get_url:
             url: https://regolith-desktop.org/regolith.key
-            dest: /usr/share/keyrings/regolith-archive.asc
+            dest: /usr/share/keyrings/regolith-keyring.asc
             mode: "0644"
         - name: Add the repository URL
           ansible.builtin.apt_repository:
             filename: regolith
-            repo: deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-archive.asc] https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+            repo: deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-keyring.asc] https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
         - name: Install Regolith
           ansible.builtin.apt:
             name:
@@ -192,12 +192,12 @@
         - name: Install Signal official public software signing key
           ansible.builtin.get_url:
             url: https://updates.signal.org/desktop/apt/keys.asc
-            dest: /usr/share/keyrings/signal-desktop-keyring.gpg
+            dest: /usr/share/keyrings/signal-desktop-keyring.asc
             mode: "0644"
         - name: Add the repository URL
           ansible.builtin.apt_repository:
             filename: signal-xenial
-            repo: deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main
+            repo: deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.asc] https://updates.signal.org/desktop/apt xenial main
         - name: Install Signal
           ansible.builtin.apt:
             name: signal-desktop
