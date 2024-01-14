@@ -220,10 +220,8 @@
             dest: /tmp/obsidian.snap
             mode: "0644"
         - name: Install obsidian
-          community.general.snap:
-            classic: true
-            dangerous: true
-            name: /tmp/obsidian.snap
+          ansible.builtin.command: snap install /tmp/obsidian.snap --dangerous --classic
+          changed_when: false
 
     - name: Install Spotify
       community.general.snap:
