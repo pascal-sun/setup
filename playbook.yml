@@ -203,3 +203,24 @@
             name: signal-desktop
             state: present
             update_cache: true
+
+    - name: Install Flameshot
+      become: true
+      ansible.builtin.apt:
+        name: flameshot
+        state: present
+        update_cache: true
+
+    - name: Install obsidian
+      # https://help.obsidian.md/Getting+started/Download+and+install+Obsidian#Install+Obsidian+on+Linux
+      block:
+        - name: Download obsidian
+          ansible.builtin.get_url:
+            url: https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.3/obsidian_1.5.3_amd64.snap
+            dest: /tmp/obsidian.snap
+            mode: "0644"
+        - name: Install obsidian
+          community.general.snap:
+            classic: true
+            dangerous: true
+            name: /tmp/obsidian.snap
