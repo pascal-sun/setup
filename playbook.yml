@@ -4,9 +4,6 @@
 
   tasks:
 
-    - name: Gather package facts
-      ansible.builtin.package_facts:
-
     - name: Install packages
       become: true
       ansible.builtin.apt:
@@ -18,7 +15,6 @@
     - name: Install Regolith
       # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
       become: true
-      when: "'regolith-desktop' not in ansible_facts.packages"
       block:
         - name: Register the Regolith public key
           ansible.builtin.get_url:
@@ -61,7 +57,7 @@
         executable: /usr/bin/fish
       register: local_bin_path
       changed_when: false
-      ignore_errors: true
+      failed_when: false
 
     - name: Check fisher.fish plugin
       # https://github.com/jorgebucaran/fisher#installation
@@ -135,8 +131,8 @@
     - name: Install other fish plugins
       # done, receive notifications when long processes finish (https://github.com/franciscolourenco/done)
       # sponge, clean fish history from typos automatically (https://github.com/meaningful-ooo/sponge)
-        # autopair, auto-complete matching pairs (https://github.com/jorgebucaran/autopair.fish)
-          # pure, pretty, minimal, and fast prompt (https://github.com/pure-fish/pure)
+      # autopair, auto-complete matching pairs (https://github.com/jorgebucaran/autopair.fish)
+      # pure, pretty, minimal, and fast prompt (https://github.com/pure-fish/pure)
       ansible.builtin.shell: |
         fisher install franciscolourenco/done
         fisher install meaningful-ooo/sponge
