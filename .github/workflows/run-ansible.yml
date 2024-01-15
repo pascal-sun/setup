@@ -34,6 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
+      - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
       - run: apt-get install -y python3-pip
       - run: pip install ansible
       - run: ansible-galaxy install --role-file requirements.yml
