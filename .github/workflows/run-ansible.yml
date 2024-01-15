@@ -14,7 +14,7 @@ jobs:
     container: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - run: apt-get update && apt-get install -y ubuntu-desktop
+      - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get install -y pipx
       - run: pipx ensurepath
       - run: pipx install ansible-core
