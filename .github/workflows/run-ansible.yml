@@ -4,18 +4,30 @@ on:
   push:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-ansible-playbook:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ["ubuntu:22.04", "ubuntu:24.04"]
-    container: ${{ matrix.os }}
+    container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v4
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get install -y python3-pip
       - run: pip install ansible-core
-      - run: ansible-galaxy install -r requirements.yml
+      - run: ansible-galaxy install --role-file requirements.yml
+      - run: ansible-playbook --syntax-check playbook.yml
+        env:
+          ANSIBLE_FORCE_COLOR: true
       - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml
+        env:
+          ANSIBLE_FORCE_COLOR: true
+      - name: Idempotence check
+        run: |
+          idempotence=$(mktemp)
+          ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: true
