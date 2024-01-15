@@ -33,10 +33,14 @@ jobs:
     container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v4
+      - run: echo $PATH
+      - run: echo $GITHUB_PATH
+      - run: echo "$GITHUB_WORKSPACE/.local/bin" >> $GITHUB_PATH
+      - run: echo $PATH
+      - run: echo $GITHUB_PATH
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
       - run: apt-get install -y python3-pip
-      - run: echo "$GITHUB_WORKSPACE/.local/bin" >> $GITHUB_PATH
       - run: python3 -m pip install --user ansible
       - run: ansible-galaxy install --role-file requirements.yml
       - run: ansible-playbook --syntax-check playbook.yml
