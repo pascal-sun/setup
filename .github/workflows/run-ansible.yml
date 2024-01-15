@@ -6,16 +6,12 @@ on:
 
 jobs:
   run-ansible-playbook:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu:20.04, ubuntu:22.04, ubuntu:23.04, ubuntu:23.10]
+    container: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - name: Run the playbook for the 1st time
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-          playbook: playbook.yml
-          options: -v
-      - name: Run the playbook for the 2nd time
-        uses: dawidd6/action-ansible-playbook@v2
-        with:
-          playbook: playbook.yml
-          options: -vv
+      - run: sh pre-install.sh
+      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
