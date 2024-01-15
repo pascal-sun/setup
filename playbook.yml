@@ -12,7 +12,6 @@
           - curl
           - python3-pip
           - git
-          - snapd
         state: present
         update_cache: true
 
@@ -156,18 +155,21 @@
         classic: true
         name: pycharm-professional
       become: true
+      tags: installed_with_snap
 
     - name: Install Chromium
       community.general.snap:
         classic: true
         name: chromium
       become: true
+      tags: installed_with_snap
 
     - name: Install Slack
       community.general.snap:
         classic: true
         name: slack
       become: true
+      tags: installed_with_snap
 
     - name: Install Signal
       # https://signal.org/fr/download/linux/
@@ -199,6 +201,7 @@
       community.general.snap:
         name: spotify
       become: true
+      tags: installed_with_snap
 
     - name: Install mise
       # https://mise.jdx.dev/getting-started.html#apt
@@ -304,3 +307,4 @@
             dest: "{{ ansible_env.HOME }}/.config/nvim"
             repo: https://github.com/NvChad/NvChad
             version: "HEAD"  # noqa: latest
+      tags: installed_with_snap

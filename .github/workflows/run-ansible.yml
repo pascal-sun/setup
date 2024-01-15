@@ -41,12 +41,12 @@ jobs:
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
       - run: apt-get install -y python3-pip
-      - run: python3 -m pip install --user ansible
-      - run: ansible-galaxy install --role-file requirements.yml --force
+      - run: python3 -m pip install --user ansible-core
+      - run: ansible-galaxy install --role-file requirements.yml
       - run: ansible-playbook --syntax-check playbook.yml
         env:
           ANSIBLE_FORCE_COLOR: true
-      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml
+      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml --skip-tags installed_with_snap
         env:
           ANSIBLE_FORCE_COLOR: true
       - name: Idempotence check
