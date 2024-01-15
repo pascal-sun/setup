@@ -18,5 +18,5 @@ jobs:
       - run: apt-get install -y pipx
       - run: pipx ensurepath
       - run: pipx install ansible-core
-      - run: .local/bin/ansible-galaxy install -r requirements.yml
-      - run: .local/bin/ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
+      - run: ./.local/bin/ansible-galaxy install -r requirements.yml
+      - run: ./.local/bin/ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
