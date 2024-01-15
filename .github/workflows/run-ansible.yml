@@ -9,7 +9,26 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  run-ansible:
+  run-ansible-with-github-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install ansible
+      - run: ansible-galaxy install --role-file requirements.yml
+      - run: ansible-playbook --syntax-check playbook.yml
+        env:
+          ANSIBLE_FORCE_COLOR: true
+      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml
+        env:
+          ANSIBLE_FORCE_COLOR: true
+      - name: Idempotence check
+        run: |
+          idempotence=$(mktemp)
+          ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml | tee -a ${idempotence}
+          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: true
+  run-ansible-with-docker-ubuntu:
     runs-on: ubuntu-latest
     container: ubuntu:22.04
     steps:
