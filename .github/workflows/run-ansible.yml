@@ -36,7 +36,7 @@ jobs:
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
       - run: apt-get install -y python3-pip
-      - run: pip install ansible
+      - run: python3 -m pip install --user ansible
       - run: ansible-galaxy install --role-file requirements.yml
       - run: ansible-playbook --syntax-check playbook.yml
         env:
