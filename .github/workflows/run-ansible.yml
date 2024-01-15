@@ -16,7 +16,6 @@ jobs:
       - uses: actions/checkout@v4
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get install -y python3-pip
-      # - run: echo "~/.local/bin" >> $GITHUB_PATH
-      - run: pip install ansible
+      - run: pip install ansible-core
       - run: ansible-galaxy install -r requirements.yml
-      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
+      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml
