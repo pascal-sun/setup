@@ -8,8 +8,9 @@ jobs:
   run-ansible-playbook:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        os: ["ubuntu:20.04", "ubuntu:22.04", "ubuntu:24.04"]
+        os: ["ubuntu:22.04", "ubuntu:24.04"]
     container: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -17,5 +18,5 @@ jobs:
       - run: apt-get install -y pipx
       - run: pipx ensurepath
       - run: pipx install ansible-core
-      - run: ansible-galaxy install -r requirements.yml
-      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
+      - run: .local/bin/ansible-galaxy install -r requirements.yml
+      - run: .local/bin/ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
