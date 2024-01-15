@@ -14,5 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: apt-get update && apt-get install -y ubuntu-desktop
-      - run: sh pre-install.sh
+      - run: apt-get install -y pipx
+      - run: pipx ensurepath
+      - run: pipx install ansible-core
+      - run: ansible-galaxy install -r requirements.yml
       - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
