@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  run-ansible-playbook:
+  run-ansible:
     runs-on: ubuntu-latest
     container: ubuntu:22.04
     steps:
