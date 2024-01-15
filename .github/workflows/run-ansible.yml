@@ -16,8 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get install -y python3-pip
-      - run: pip install ansible-core
-      - run: ansible-galaxy install --role-file requirements.yml
+      - run: pip install ansible
       - run: ansible-playbook --syntax-check playbook.yml
         env:
           ANSIBLE_FORCE_COLOR: true
