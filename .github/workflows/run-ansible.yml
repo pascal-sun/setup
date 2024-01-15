@@ -13,5 +13,6 @@ jobs:
     container: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - run: apt-get update && apt-get install -y ubuntu-desktop
       - run: sh pre-install.sh
       - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yaml
