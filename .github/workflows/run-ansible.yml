@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  run-ansible-with-github-ubuntu:
+  with-github-runner:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,14 +28,17 @@ jobs:
           tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
         env:
           ANSIBLE_FORCE_COLOR: true
-  run-ansible-with-docker-ubuntu:
+  with-docker-container:
     runs-on: ubuntu-latest
     container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v4
       - run: echo $PATH
       - run: echo $GITHUB_PATH
-      - run: echo "$GITHUB_WORKSPACE/.local/bin" >> $GITHUB_PATH
+      - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - run: echo $PATH
+      - run: echo $GITHUB_PATH
+      - run: echo "$HOME/.local/bin" >> $PATH
       - run: echo $PATH
       - run: echo $GITHUB_PATH
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
