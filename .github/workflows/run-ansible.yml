@@ -10,11 +10,7 @@ concurrency:
 
 jobs:
   with-github-runner:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-20.04, ubuntu-22.04]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - run: pip install ansible
@@ -34,26 +30,15 @@ jobs:
           ANSIBLE_FORCE_COLOR: true
   with-docker-container:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ["ubuntu:20.04", "ubuntu:22.04"]
-    container: ${{ matrix.os }}
+    container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v4
-      - run: echo $PATH
-      - run: echo $GITHUB_PATH
       - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
-      - run: echo $PATH
-      - run: echo $GITHUB_PATH
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop
       - run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
       - run: apt-get install -y python3-pip
       - run: python3 -m pip install --user ansible-core
       - run: ansible-galaxy install --role-file requirements.yml
-      - run: ansible-playbook --syntax-check playbook.yml
-        env:
-          ANSIBLE_FORCE_COLOR: true
       - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml --skip-tags installed_with_snap
         env:
           ANSIBLE_FORCE_COLOR: true
