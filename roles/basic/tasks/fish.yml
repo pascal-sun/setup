@@ -1,6 +1,7 @@
 ---
 # https://github.com/fish-shell/fish-shell#packages-for-linux
 - name: Add fish repository from PPA
+  become: true
   ansible.builtin.apt_repository:
     repo: ppa:fish-shell/release-3
 
