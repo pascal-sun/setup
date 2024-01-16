@@ -4,12 +4,13 @@
   connection: local
 
   roles:
-    - role: base
+    - base
+    - personal
+    - work
+    - cyber
+    - dev
 
   tasks:
-
-
-
     - name: Check if Obsidian is already installed
       # https://help.obsidian.md/Getting+started/Download+and+install+Obsidian#Install+Obsidian+on+Linux
       ansible.builtin.stat:
