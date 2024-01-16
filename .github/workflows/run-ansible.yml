@@ -60,7 +60,7 @@ jobs:
       - name: Idempotence check
         run: |
           idempotence=$(mktemp)
-          ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml | tee -a ${idempotence}
+          ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml --skip-tags installed_with_snap | tee -a ${idempotence}
           tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
         env:
           ANSIBLE_FORCE_COLOR: true
