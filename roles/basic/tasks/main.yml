@@ -1,0 +1,5 @@
+---
+- name: Install apt packages
+  ansible.builtin.import_tasks: apt_packages.yml
+- name: Install Regolith
+  ansible.builtin.import_tasks: regolith.yml
