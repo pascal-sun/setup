@@ -1,8 +1,11 @@
+---
 name: ✨ Lint Ansible Playbook
 run-name: ✨ Lint Ansible Playbook
 on:
   push:
   workflow_dispatch:
+  schedule:
+    - cron "0 0 * * SUN"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

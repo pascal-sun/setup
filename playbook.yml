@@ -3,39 +3,10 @@
   hosts: localhost
   connection: local
 
+  roles:
+    - role: basic
+
   tasks:
-
-    - name: Install packages
-      become: true
-      ansible.builtin.apt:
-        name:
-          - curl
-          - python3-pip
-          - git
-        state: present
-        update_cache: true
-
-    - name: Install Regolith
-      # https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
-      become: true
-      block:
-        - name: Register the Regolith public key
-          ansible.builtin.get_url:
-            url: https://regolith-desktop.org/regolith.key
-            dest: /usr/share/keyrings/regolith-keyring.asc
-            mode: "0644"
-        - name: Add the repository URL
-          ansible.builtin.apt_repository:
-            filename: regolith
-            repo: deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-keyring.asc] https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
-        - name: Install Regolith
-          ansible.builtin.apt:
-            name:
-              - regolith-desktop
-              - regolith-session-flashback
-              - regolith-look-nord
-            state: present
-            update_cache: true
 
     - name: Install fish
       # https://github.com/fish-shell/fish-shell#packages-for-linux
@@ -108,8 +79,8 @@
     - name: Install prerequisites
       ansible.builtin.apt:
         name:
-          - fd-find # simple, fast and user-friendly alternative to "find" (https://github.com/sharkdp/fd#on-ubuntu)
-          - bat # "cat" clone with syntax highlighting and git integration (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
+          - fd-find  # simple, fast and user-friendly alternative to "find" (https://github.com/sharkdp/fd#on-ubuntu)
+          - bat  # "cat" clone with syntax highlighting and git integration (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
         state: present
         update_cache: true
       become: true
@@ -284,6 +255,7 @@
       when: not docker.stat.exists
 
     - name: Install NvChad
+      tags: installed_with_snap
       # https://nvchad.com/docs/quickstart/install
       block:
         - name: Install neovim
@@ -307,4 +279,3 @@
             dest: "{{ ansible_env.HOME }}/.config/nvim"
             repo: https://github.com/NvChad/NvChad
             version: "HEAD"  # noqa: latest
-      tags: installed_with_snap

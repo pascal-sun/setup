@@ -1,8 +1,11 @@
+---
 name: 🚀 Run Ansible Playbook
 run-name: 🚀 Run Ansible Playbook
 on:
   push:
   workflow_dispatch:
+  schedule:
+    - cron "0 0 * * SUN"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
