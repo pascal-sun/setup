@@ -4,6 +4,7 @@
   ansible.builtin.apt:
     name:
       - curl
+      - flameshot
       - git
       - python3-pip
     state: present

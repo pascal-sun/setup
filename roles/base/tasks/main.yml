@@ -5,3 +5,5 @@
   ansible.builtin.import_tasks: regolith.yml
 - name: Install fish shell and its plugins
   ansible.builtin.import_tasks: fish.yml
+- name: Install NvChad
+  ansible.builtin.import_tasks: nvchad.yml

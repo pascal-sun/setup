@@ -1,0 +1,21 @@
+---
+# https://signal.org/fr/download/linux/
+- name: Register Signal GPG key
+  become: true
+  ansible.builtin.get_url:
+    url: https://updates.signal.org/desktop/apt/keys.asc
+    dest: /usr/share/keyrings/signal-desktop-keyring.asc
+    mode: u=rwx,g=rx,o=rx
+
+- name: Add Signal repository URL
+  become: true
+  ansible.builtin.apt_repository:
+    filename: signal-xenial
+    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.asc] https://updates.signal.org/desktop/apt xenial main
+
+- name: Install Signal package
+  become: true
+  ansible.builtin.apt:
+    name: signal-desktop
+    state: present
+    update_cache: true
