@@ -7,3 +7,5 @@
   ansible.builtin.import_tasks: fish.yml
 - name: Install NvChad
   ansible.builtin.import_tasks: nvchad.yml
+- name: Install Obsidian
+  ansible.builtin.import_tasks: obsidian.yml
