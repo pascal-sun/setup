@@ -3,3 +3,5 @@
   ansible.builtin.import_tasks: apt_packages.yml
 - name: Install Regolith
   ansible.builtin.import_tasks: regolith.yml
+- name: Install fish shell and its plugins
+  ansible.builtin.import_tasks: fish.yml
