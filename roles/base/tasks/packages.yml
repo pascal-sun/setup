@@ -7,6 +7,7 @@
       - flameshot
       - git
       - python3-pip
+      - python3-venv
     state: present
     update_cache: true
 
