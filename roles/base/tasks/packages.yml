@@ -9,3 +9,7 @@
       - python3-pip
     state: present
     update_cache: true
+
+- name: Install pip packages
+  ansible.builtin.pip:
+    name: pipx
