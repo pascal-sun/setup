@@ -1,0 +1,4 @@
+---
+- name: Install exegol
+  community.general.pipx:
+    name: exegol

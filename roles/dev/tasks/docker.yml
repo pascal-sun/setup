@@ -6,27 +6,31 @@
   register: docker
 
 - name: Install Docker official GPG key
+  become: true
   ansible.builtin.get_url:
     url: https://download.docker.com/linux/ubuntu/gpg
     dest: /etc/apt/keyrings/docker.asc
-    mode: "0644"
-  become: true
+    mode: u=rw,g=r,o=r
 
 - name: Add the repository URL
+  become: true
   ansible.builtin.apt_repository:
     filename: docker
     repo: deb [signed-by=/etc/apt/keyrings/docker.asc arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+
+- name: Install Docker packages
   become: true
-
-- name: Download the .deb package
-  ansible.builtin.get_url:
-    url: https://desktop.docker.com/linux/main/amd64/docker-desktop-4.26.1-amd64.deb
-    dest: /tmp/docker-desktop.deb
-    mode: "0644"
-  when: not docker.stat.exists
-
-- name: Install Docker
   ansible.builtin.apt:
-    deb: /tmp/docker-desktop.deb
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+
+- name: Add user to the docker group
   become: true
-  when: not docker.stat.exists
+  ansible.builtin.user:
+    name: "{{ ansible_user_id }}"
+    append: true
+    groups: docker

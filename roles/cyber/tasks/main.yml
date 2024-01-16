@@ -1,2 +1,3 @@
 ---
-# tasks file for infosec
+- name: Install exegol
+  ansible.builtin.import_tasks: exegol.yml
