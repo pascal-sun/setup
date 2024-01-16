@@ -7,7 +7,7 @@
   ansible.builtin.import_tasks: docker.yml
 - name: Install packages with pipx
   community.general.pipx:
-    name: {{ item }}
+    name: "{{ item }}"
   loop:
     - black
     - ruff
