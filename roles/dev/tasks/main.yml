@@ -5,3 +5,9 @@
   ansible.builtin.import_tasks: mise.yml
 - name: Install docker
   ansible.builtin.import_tasks: docker.yml
+- name: Install packages with pipx
+  community.general.pipx:
+    name: {{ item }}
+  loop:
+    - black
+    - ruff
