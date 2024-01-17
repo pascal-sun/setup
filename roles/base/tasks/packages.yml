@@ -17,10 +17,12 @@
     name: pipx
 
 - name: Ensure snap is started and enabled on boot
+  become: true
   ansible.builtin.service:
     name: snapd
     enabled: true
     state: started
 
 - name: Refresh Snap
+  become: true
   ansible.builtin.command: snap refresh
