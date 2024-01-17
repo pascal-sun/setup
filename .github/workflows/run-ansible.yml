@@ -42,7 +42,7 @@ jobs:
       - run: apt-get install -y python3-pip
       - run: python3 -m pip install --user ansible-core
       - run: ansible-galaxy install --role-file requirements.yml
-      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml
+      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml -vvvvv
         env:
           ANSIBLE_FORCE_COLOR: true
       - name: Idempotence check
