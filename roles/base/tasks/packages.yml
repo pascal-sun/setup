@@ -15,3 +15,6 @@
 - name: Install pip packages
   ansible.builtin.pip:
     name: pipx
+
+- name: Refresh Snap
+  ansible.builtin.command: snap refresh
