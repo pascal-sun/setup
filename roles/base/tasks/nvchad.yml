@@ -3,7 +3,7 @@
 - name: Install neovim
   become: true
   community.general.snap:
-    name: nvim
+    name: neovim
     classic: true
   tags: installed_with_snap
 
