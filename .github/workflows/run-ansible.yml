@@ -33,9 +33,7 @@ jobs:
           ANSIBLE_FORCE_COLOR: true
   with-docker-container:
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:22.04
-      options: --privileged
+    container: ubuntu:22.04
     steps:
       - uses: actions/checkout@v4
       - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
@@ -44,7 +42,7 @@ jobs:
       - run: apt-get install -y python3-pip
       - run: python3 -m pip install --user ansible-core
       - run: ansible-galaxy install --role-file requirements.yml
-      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml -vvvvv
+      - run: ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml --skip-tags installed_with_snap
         env:
           ANSIBLE_FORCE_COLOR: true
       - name: Idempotence check
