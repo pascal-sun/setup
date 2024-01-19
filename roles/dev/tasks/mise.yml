@@ -21,3 +21,15 @@
     name: mise
     state: present
     update_cache: true
+
+- name: Install Go
+  ansible.builtin.shell: mise use --global go
+  changed_when: "'installed' in result.stdout"
+
+- name: Install Python
+  ansible.builtin.shell: mise use --global python
+  changed_when: "'installed' in result.stdout"
+
+- name: Install Node
+  ansible.builtin.shell: mise use --global node
+  changed_when: "'installed' in result.stdout"
