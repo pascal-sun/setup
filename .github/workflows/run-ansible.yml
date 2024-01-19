@@ -33,7 +33,9 @@ jobs:
           ANSIBLE_FORCE_COLOR: true
   with-docker-container:
     runs-on: ubuntu-latest
-    container: ubuntu:22.04
+    container:
+      image: ubuntu:22.04
+      options: --privileged
     steps:
       - uses: actions/checkout@v4
       - run: echo "$HOME/.local/bin" >> $GITHUB_PATH
