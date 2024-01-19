@@ -32,6 +32,7 @@
 
 # https://mise.jdx.dev/lang/python.html#requirements
 - name: Install dependencies to install Python
+  become: true
   ansible.builtin.apt:
     name:
       - build-essential
