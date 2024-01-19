@@ -7,6 +7,7 @@ Ansible Playbook to setup my workstation
 
 ### How to run it?
 
+On a freshly installed Ubuntu 22.04 LTS (Jammy Jellyfish):
 ```shell
 sudo apt install git
 git clone https://github.com/pascal-sun/setup.git
@@ -16,15 +17,4 @@ ansible-playbook playbook.yml --ask-become-pass
 ```
 
 ### Todo
-- [x] PyCharm, ~~Toolbox~~
-- [x] ~~Firefox~~ (already installed in Ubuntu 22.04), Chrome
-- [x] mise (python, golang)
 - [ ] Burp Suite
-- [x] Slack
-- [ ] exegol
-- [x] docker
-- [x] Signal
-- [x] Flameshot
-- [ ] Wireshark
-- [x] Spotify
-- [x] Obsidian
