@@ -37,5 +37,8 @@ ansible-galaxy install -r requirements.yml
 ```shell
 ansible-playbook playbook.yml --ask-become-pass 
 ```
+```shell
+BECOME password: <Enter your password>
+```
 
 And that's it! :rocket:
