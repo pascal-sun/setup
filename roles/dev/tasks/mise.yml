@@ -24,12 +24,13 @@
 
 - name: Install Go
   ansible.builtin.shell: mise use --global go
-  changed_when: "'installed' in result.stdout"
-
-- name: Install Python
-  ansible.builtin.shell: mise use --global python
-  changed_when: "'installed' in result.stdout"
+  changed_when: "'installed' in result.stderr"
 
 - name: Install Node
   ansible.builtin.shell: mise use --global node
-  changed_when: "'installed' in result.stdout"
+  changed_when: "'installed' in result.stderr"
+
+- name: Install Python
+  ansible.builtin.shell: mise use --global python@3.10
+  changed_when: "'installed' in result.stderr"
+
