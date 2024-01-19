@@ -30,6 +30,26 @@
   ansible.builtin.shell: mise use --global node
   changed_when: "'installed' in result.stderr"
 
+# https://mise.jdx.dev/lang/python.html#requirements
+- name: Install dependencies to install Python
+  ansible.builtin.apt:
+    name:
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+    state: present
+    update_cache: true
+
 - name: Install Python
   ansible.builtin.shell: mise use --global python@3.10
   changed_when: "'installed' in result.stderr"
