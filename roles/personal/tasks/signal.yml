@@ -11,7 +11,9 @@
   become: true
   ansible.builtin.apt_repository:
     filename: signal-xenial
-    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.asc] https://updates.signal.org/desktop/apt xenial main
+    repo: >-
+      deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.asc]
+      https://updates.signal.org/desktop/apt xenial main
 
 - name: Install Signal package
   become: true

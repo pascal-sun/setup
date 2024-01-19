@@ -33,8 +33,11 @@ jobs:
       - name: Check Ansible Playbook's idempotence
         run: |
           idempotence=$(mktemp)
-          ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml | tee -a ${idempotence}
-          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+          ansible-playbook ${RUNNER_DEBUG:+-vvv} playbook.yml | \
+          tee -a ${idempotence}
+          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && \
+          (echo 'Idempotence test: pass' && exit 0) || \
+          (echo 'Idempotence test: fail' && exit 1)
         env:
           ANSIBLE_FORCE_COLOR: true
 
@@ -48,21 +51,31 @@ jobs:
       - name: Add ~/.local/bin on PATH
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install Ubuntu desktop and Python's pip
-        run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y ubuntu-desktop python3-pip
+        run: |
+          apt-get update && DEBIAN_FRONTEND=noninteractive \
+          apt-get install -y ubuntu-desktop python3-pip
       - name: Upgrade packages
-        run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
+        run: |
+          apt-get update && DEBIAN_FRONTEND=noninteractive \
+          apt-get upgrade -y
       - name: Install Ansible
         run: python3 -m pip install --user ansible-core
       - name: Install Ansible collection
         run: ansible-galaxy install --role-file requirements.yml
       - name: Test the Ansible Playbook
-        run: ansible-playbook playbook.yml --skip-tags installed_with_snap ${RUNNER_DEBUG:+-vvv}
+        run: |
+          ansible-playbook playbook.yml \
+          --skip-tags installed_with_snap ${RUNNER_DEBUG:+-vvv}
         env:
           ANSIBLE_FORCE_COLOR: true
       - name: Check Ansible Playbook's idempotence
         run: |
           idempotence=$(mktemp)
-          ansible-playbook playbook.yml --skip-tags installed_with_snap ${RUNNER_DEBUG:+-vvv} | tee -a ${idempotence}
-          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
+          ansible-playbook playbook.yml \
+          --skip-tags installed_with_snap ${RUNNER_DEBUG:+-vvv} | \
+          tee -a ${idempotence}
+          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && \
+          (echo 'Idempotence test: pass' && exit 0) || \
+          (echo 'Idempotence test: fail' && exit 1)
         env:
           ANSIBLE_FORCE_COLOR: true

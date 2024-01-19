@@ -11,7 +11,9 @@
   become: true
   ansible.builtin.apt_repository:
     filename: mise
-    repo: deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc arch=amd64] https://mise.jdx.dev/deb stable main
+    repo: >-
+      deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc arch=amd64]
+      https://mise.jdx.dev/deb stable main
 
 - name: Install mise package
   become: true

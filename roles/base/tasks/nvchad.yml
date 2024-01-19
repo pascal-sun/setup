@@ -15,7 +15,8 @@
 
 - name: Install JetBrains Mono Nerd Font
   ansible.builtin.get_url:
-    url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf
+    url: "https://github.com/ryanoasis/nerd-fonts/raw/master/\
+    patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf"
     dest: ~/.local/share/fonts/JetBrainsMonoNerdFont-Regular.ttf
     mode: u=rw,g=r,o=r
 

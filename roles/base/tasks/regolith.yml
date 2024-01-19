@@ -11,7 +11,9 @@
   become: true
   ansible.builtin.apt_repository:
     filename: regolith
-    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-keyring.asc] https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+    repo: >
+      deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-keyring.asc]
+      https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
 
 - name: Install Regolith packages
   become: true
