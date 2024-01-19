@@ -9,9 +9,14 @@ Ansible Playbook to setup my workstation
 
 On a freshly installed **Ubuntu 22.04 LTS** (_Jammy Jellyfish_):
 
+#### Update your packages
+```shell
+sudo apt update && sudo apt upgrade -y
+```
+
 #### Install `git` and clone the repository
 ```shell
-sudo apt install git
+sudo apt install -y git
 git clone https://github.com/pascal-sun/setup.git
 cd setup/
 ```
