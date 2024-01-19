@@ -23,11 +23,11 @@
     update_cache: true
 
 - name: Install Go
-  ansible.builtin.shell: mise use --global go
+  ansible.builtin.command: mise use --global go
   changed_when: "'installed' in result.stderr"
 
 - name: Install Node
-  ansible.builtin.shell: mise use --global node
+  ansible.builtin.command: mise use --global node
   changed_when: "'installed' in result.stderr"
 
 # https://mise.jdx.dev/lang/python.html#requirements
@@ -51,6 +51,5 @@
     update_cache: true
 
 - name: Install Python
-  ansible.builtin.shell: mise use --global python@3.10
+  ansible.builtin.command: mise use --global python@3.10
   changed_when: "'installed' in result.stderr"
-
