@@ -1,0 +1,31 @@
+---
+name: ✨ Lint
+run-name: ✨ Lint
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * SUN"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ansible-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Lint for Ansible Playbook
+        uses: ansible/ansible-lint@v6
+
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install yamllint
+        run: pip install yamllint
+      - name: Lint for YAML file
+        run: yamllint .
