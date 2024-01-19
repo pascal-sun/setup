@@ -1,7 +1,7 @@
 # setup
 
-[![🚀 Run Ansible Playbook](https://github.com/pascal-sun/setup/actions/workflows/run-ansible.yml/badge.svg)](https://github.com/pascal-sun/setup/actions/workflows/run-ansible.yml)
-[![✨ Lint Ansible Playbook](https://github.com/pascal-sun/setup/actions/workflows/lint-ansible.yml/badge.svg)](https://github.com/pascal-sun/setup/actions/workflows/lint-ansible.yml)
+[![🚀 Integration](https://github.com/pascal-sun/setup/actions/workflows/run-ansible.yml/badge.svg)](https://github.com/pascal-sun/setup/actions/workflows/run-ansible.yml)
+[![✨ Lint](https://github.com/pascal-sun/setup/actions/workflows/lint.yml/badge.svg)](https://github.com/pascal-sun/setup/actions/workflows/lint.yml)
 
 Ansible Playbook to setup my workstation
 
