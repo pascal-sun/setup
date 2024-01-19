@@ -24,10 +24,12 @@
 
 - name: Install Go
   ansible.builtin.command: mise use --global go
+  register: result
   changed_when: "'installed' in result.stderr"
 
 - name: Install Node
   ansible.builtin.command: mise use --global node
+  register: result
   changed_when: "'installed' in result.stderr"
 
 # https://mise.jdx.dev/lang/python.html#requirements
@@ -53,4 +55,5 @@
 
 - name: Install Python
   ansible.builtin.command: mise use --global python@3.10
+  register: result
   changed_when: "'installed' in result.stderr"
