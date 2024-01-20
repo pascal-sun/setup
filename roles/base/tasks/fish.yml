@@ -18,24 +18,24 @@
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/fish
 
-- name: Create configuration directory for fish ~/.config/fish
-  ansible.builtin.file:
-    path: ~/.config/fish
-    mode: u=rwx,g=rx,o=rx
-    state: directory
-
-- name: Create a local binary directory ~/.local/bin
-  ansible.builtin.file:
-    path: ~/.local/bin
-    mode: u=rwx,g=rx,o=rx
-    state: directory
-
-- name: Add .local/bin to PATH with fish
-  ansible.builtin.lineinfile:
-    path: ~/.config/fish/config.fish
-    create: true
-    line: fish_add_path ~/.local/bin
-    mode: u=rw,g=r,o=r
+# - name: Create configuration directory for fish ~/.config/fish
+#   ansible.builtin.file:
+#     path: ~/.config/fish
+#     mode: u=rwx,g=rx,o=rx
+#     state: directory
+#
+# - name: Create a local binary directory ~/.local/bin
+#   ansible.builtin.file:
+#     path: ~/.local/bin
+#     mode: u=rwx,g=rx,o=rx
+#     state: directory
+#
+# - name: Add .local/bin to PATH with fish
+#   ansible.builtin.lineinfile:
+#     path: ~/.config/fish/config.fish
+#     create: true
+#     line: fish_add_path ~/.local/bin
+#     mode: u=rw,g=r,o=r
 
 # https://github.com/jorgebucaran/fisher#installation
 - name: Install Fisher plugin for fish
