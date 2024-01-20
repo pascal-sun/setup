@@ -5,6 +5,8 @@
   ansible.builtin.import_tasks: mise.yml
 - name: Install docker
   ansible.builtin.import_tasks: docker.yml
+- name: Setup gitconfig
+  ansible.builtin.import_tasks: gitconfig.yml
 - name: Install packages with pipx
   community.general.pipx:
     name: "{{ item }}"
