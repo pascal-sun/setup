@@ -1,0 +1,16 @@
+---
+- name: Add name to ~/.gitconfig
+  community.general.git_config:
+    name: user.name
+    scope: global
+    value: Pascal SUN
+- name: Add email to ~/.gitconfig
+  community.general.git_config:
+    name: user.email
+    scope: global
+    value: 35567930+pascal-sun@users.noreply.github.com
+- name: Add editor to ~/.gitconfig
+  community.general.git_config:
+    name: core.editor
+    scope: global
+    value: nvim
