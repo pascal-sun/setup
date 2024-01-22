@@ -62,6 +62,12 @@
     deb: /tmp/lsd.deb
   when: not lsd.stat.exists
 
+- name: Create configuration directory for lsd ~/.config/lsd
+  ansible.builtin.file:
+    path: ~/.config/lsd
+    mode: u=rw,g=r,o=r
+    state: directory
+
 - name: Add lsd configuration file
   ansible.builtin.copy:
     src: .config/lsd/config.yaml
