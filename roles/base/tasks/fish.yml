@@ -90,31 +90,6 @@
       changed_when: true
       when: fzf.rc != 0
 
-    - name: Install prerequisites for fzf plugin
-      become: true
-      ansible.builtin.apt:
-        name:
-          # simple, fast and user-friendly alternative to "find"
-          # (https://github.com/sharkdp/fd#on-ubuntu)
-          - fd-find
-          # "cat" clone with syntax highlighting and git integration
-          # (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
-          - bat
-        state: present
-        update_cache: true
-
-    - name: Add symlink for fd
-      ansible.builtin.file:
-        src: /usr/bin/fdfind
-        dest: ~/.local/bin/fd
-        state: link
-
-    - name: Add symlink for bat
-      ansible.builtin.file:
-        src: /usr/bin/batcat
-        dest: ~/.local/bin/bat
-        state: link
-
     - name: Install fzf plugin for fish
       ansible.builtin.shell: fisher install PatrickF1/fzf.fish
       args:
@@ -153,3 +128,6 @@
   args:
     executable: /usr/bin/fish
   changed_when: "'Installed 1 plugin/s' in result.stdout"
+
+# fish abbreviations
+# (https://fishshell.com/docs/current/cmds/abbr.html)

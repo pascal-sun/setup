@@ -11,6 +11,63 @@
     state: present
     update_cache: true
 
+# simple, fast and user-friendly alternative to "find"
+# (https://github.com/sharkdp/fd#on-ubuntu)
+- name: Install fd, alternative to "find"
+  become: true
+  ansible.builtin.apt:
+    name: fd-find
+    state: present
+    update_cache: true
+
+- name: Add symlink for fd
+  ansible.builtin.file:
+    src: /usr/bin/fdfind
+    dest: ~/.local/bin/fd
+    state: link
+
+# "cat" clone with syntax highlighting and git integration
+# (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
+- name: Install bat, alternative to "cat"
+  become: true
+  ansible.builtin.apt:
+    name: bat
+    state: present
+    update_cache: true
+
+- name: Add symlink for bat
+  ansible.builtin.file:
+    src: /usr/bin/batcat
+    dest: ~/.local/bin/bat
+    state: link
+
+# The next gen ls command
+# (https://github.com/lsd-rs/lsd)
+- name: Check if lsd is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/lsd
+  register: lsd
+
+- name: Download lsd
+  ansible.builtin.get_url:
+    url: >-
+     https://github.com/lsd-rs/lsd/releases/download/v1.0.0/lsd_1.0.0_amd64.deb
+    dest: /tmp/lsd.deb
+    mode: u=rw,g=r,o=r
+  when: not lsd.stat.exists
+
+- name: Install lsd package
+  become: true
+  ansible.builtin.apt:
+    deb: /tmp/lsd.deb
+  when: not lsd.stat.exists
+
+- name: Add lsd configuration file
+  ansible.builtin.copy:
+    src: .config/lsd/config.yaml
+    dest: ~/.config/lsd/config.yaml
+    mode: u=rw,g=r,o=r
+
 - name: Install pip packages
   ansible.builtin.pip:
     name: pipx
