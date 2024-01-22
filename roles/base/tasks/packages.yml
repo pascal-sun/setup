@@ -69,6 +69,7 @@
     state: directory
 
 - name: Add lsd configuration file
+  become: true
   ansible.builtin.copy:
     src: lsd/config.yaml
     dest: ~/.config/lsd/
