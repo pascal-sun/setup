@@ -135,7 +135,7 @@
   ansible.builtin.shell: abbr --query ls
   args:
     executable: /usr/bin/fish
-  registed: lsd
+  register: lsd
   changed_when: false
 
 - name: Add lsd abbreviation
@@ -158,4 +158,3 @@
     executable: /usr/bin/fish
   changed_when: true
   when: bat.rc != 0
-
