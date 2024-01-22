@@ -131,3 +131,31 @@
 
 # fish abbreviations
 # (https://fishshell.com/docs/current/cmds/abbr.html)
+- name: Check if lsd abbreviation exists
+  ansible.builtin.shell: abbr --query ls
+  args:
+    executable: /usr/bin/fish
+  registed: lsd
+  changed_when: false
+
+- name: Add lsd abbreviation
+  ansible.builtin.shell: abbr --add ls lsd
+  args:
+    executable: /usr/bin/fish
+  changed_when: true
+  when: lsd.rc != 0
+
+- name: Check if bat abbreviation exists
+  ansible.builtin.shell: abbr --query cat
+  args:
+    executable: /usr/bin/fish
+  register: bat
+  changed_when: false
+
+- name: Add bat abbreviation
+  ansible.builtin.shell: abbr --add cat bat --paging=never
+  args:
+    executable: /usr/bin/fish
+  changed_when: true
+  when: bat.rc != 0
+
