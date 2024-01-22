@@ -137,6 +137,7 @@
     executable: /usr/bin/fish
   register: lsd
   changed_when: false
+  failed_when: false
 
 - name: Add lsd abbreviation
   ansible.builtin.shell: abbr --add ls lsd
@@ -151,6 +152,7 @@
     executable: /usr/bin/fish
   register: bat
   changed_when: false
+  failed_when: false
 
 - name: Add bat abbreviation
   ansible.builtin.shell: abbr --add cat bat --paging=never
