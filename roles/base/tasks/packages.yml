@@ -70,8 +70,8 @@
 
 - name: Add lsd configuration file
   ansible.builtin.copy:
-    src: lsd_config.yaml
-    dest: ~/.config/lsd/config.yaml
+    src: lsd/config.yaml
+    dest: ~/.config/lsd/
     mode: u=rw,g=r,o=r
 
 - name: Install pip packages
