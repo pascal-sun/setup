@@ -71,7 +71,7 @@
 - name: Add lsd configuration file
   become: true
   ansible.builtin.copy:
-    src: lsd/config.yaml
+    src: {{ role_path }}/files/lsd/config.yaml
     dest: ~/.config/lsd/
     mode: u=rw,g=r,o=r
 
