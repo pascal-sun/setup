@@ -24,3 +24,25 @@
       - regolith-look-nord
     state: present
     update_cache: true
+
+- name: Install Status Bar Indicators
+  become: true
+  ansible.builtin.apt:
+    name:
+      - i3xrocks-battery
+      - i3xrocks-bluetooth
+      - i3xrocks-cpu-usage
+      - i3xrocks-keyboard-layout
+      - i3xrocks-media-player
+      - i3xrocks-memory
+      - i3xrocks-microphone
+      - i3xrocks-net-traffic
+      - i3xrocks-rofication
+      - i3xrocks-temp
+      - i3xrocks-time
+      - i3xrocks-updates
+      - i3xrocks-volume
+      - i3xrocks-weather
+      - i3xrocks-wifi
+    state: present
+    update_cache: true
