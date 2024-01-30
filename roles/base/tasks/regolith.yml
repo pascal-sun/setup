@@ -37,6 +37,7 @@
       - i3xrocks-memory
       - i3xrocks-microphone
       - i3xrocks-net-traffic
+      - i3xrocks-nm-vpn
       - i3xrocks-rofication
       - i3xrocks-temp
       - i3xrocks-time

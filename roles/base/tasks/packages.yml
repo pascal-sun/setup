@@ -65,7 +65,7 @@
 - name: Create configuration directory for lsd ~/.config/lsd
   ansible.builtin.file:
     path: ~/.config/lsd
-    mode: u=rw,g=r,o=r
+    mode: u=rwx,g=rx,o=rx
     state: directory
 
 - name: Add lsd configuration file
