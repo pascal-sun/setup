@@ -138,6 +138,13 @@
     line: abbr --add ls lsd
     mode: u=rw,g=r,o=r
 
+- name: Add ll abbreviation
+  ansible.builtin.lineinfile:
+    path: ~/.config/fish/config.fish
+    create: true
+    line: abbr --add ll lsd --almost-all --group-directories-first -l
+    mode: u=rw,g=r,o=r
+
 - name: Add cat abbreviation
   ansible.builtin.lineinfile:
     path: ~/.config/fish/config.fish
