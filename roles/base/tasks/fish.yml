@@ -156,5 +156,15 @@
   ansible.builtin.lineinfile:
     path: ~/.config/fish/config.fish
     create: true
-    line: abbr -a batlog --set-cursor "tail -f % | bat --paging=never -l log"
+    line: abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
+    mode: u=rw,g=r,o=r
+
+- name: Add update abbreviation
+  ansible.builtin.lineinfile:
+    path: ~/.config/fish/config.fish
+    create: true
+    line: >-
+      abbr --add update sudo apt update &&
+      sudo apt upgrade --assume-yes &&
+      sudo snap refresh
     mode: u=rw,g=r,o=r
