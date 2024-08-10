@@ -42,6 +42,6 @@
 
 - name: Customize the status bar
   ansible.builtin.copy:
-    src: "{{ role_path }}/files/.config/regolith3/i3xrocks/conf.d"
-    dest: ~/.config/regolith3/i3xrocks/conf.d
+    src: "{{ role_path }}/files/.config/regolith3/i3xrocks/conf.d/"
+    dest: ~/.config/regolith3/i3xrocks/conf.d/
     mode: u=rw,g=r,o=r
