@@ -34,7 +34,8 @@
 
 - name: Add shell completions for pipx
   ansible.builtin.shell: >
-    register-python-argcomplete --shell fish pipx > {{ ansible_env.HOME }}/.config/fish/completions/pipx.fish
+    register-python-argcomplete --shell fish pipx
+    > {{ ansible_env.HOME }}/.config/fish/completions/pipx.fish
   args:
     executable: /usr/bin/fish
   changed_when: true
@@ -45,7 +46,7 @@
 - name: Install tldr
   community.general.snap:
     classic: true
-    name: tlsr
+    name: tldr
   become: true
   tags: installed_with_snap
 
