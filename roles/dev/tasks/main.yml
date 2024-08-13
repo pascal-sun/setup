@@ -13,3 +13,4 @@
   loop:
     - black
     - ruff
+    - virtualenv
