@@ -14,18 +14,20 @@
       # - htop # an interactive process viewer
       - jq # a JSON processor
       - git
-      # - python3-venv
       # - ripgrep
     state: present
     update_cache: true
 
 # pipx: install and run python applications in isolated environments
-- name: Install pipx
-  become: true
-  ansible.builtin.apt:
+- name: Install pip packages
+  ansible.builtin.pip:
     name: pipx
-    state: present
-    update_cache: true
+
+- name: Add shell completions for pipx
+  ansible.builtin.shell: sudo pipx ensurepath
+  args:
+    executable: /usr/bin/fish
+  changed_when: true
 
 - name: Check if pipx completions for fish exists
   ansible.builtin.stat:
@@ -50,6 +52,7 @@
   become: true
   tags: installed_with_snap
 
+
 # simple, fast and user-friendly alternative to "find"
 # (https://github.com/sharkdp/fd#on-ubuntu)
 - name: Install fd, alternative to "find"
@@ -65,9 +68,10 @@
     dest: "{{ ansible_env.HOME }}/.local/bin/fd"
     state: link
 
+
 # "cat" clone with syntax highlighting and git integration
 # (https://github.com/sharkdp/bat#on-ubuntu-using-apt)
-- name: Install bat, alternative to "cat"
+- name: Install bat
   become: true
   ansible.builtin.apt:
     name: bat
@@ -79,6 +83,14 @@
     src: /usr/bin/batcat
     dest: "{{ ansible_env.HOME }}/.local/bin/bat"
     state: link
+
+- name: Add MANPAGER to colorize pager for man
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+    create: true
+    line: set -x MANPAGER "sh -c 'col --no-backspaces --spaces | bat --plain --language man'"
+    mode: u=rw,g=r,o=r
+
 
 # The next gen ls command
 # (https://github.com/lsd-rs/lsd)
@@ -112,14 +124,3 @@
     src: files/.config/lsd/config.yaml
     dest: "{{ ansible_env.HOME }}/.config/lsd/config.yaml"
     mode: u=rw,g=r,o=r
-
-- name: Test
-  ansible.builtin.shell: python3 -m venv env
-  args:
-    executable: /usr/bin/fish
-  changed_when: true
-  register: python
-
-- name: Print return information from the previous task
-  ansible.builtin.debug:
-    var: python

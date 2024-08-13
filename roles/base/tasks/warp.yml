@@ -17,3 +17,9 @@
     deb: /tmp/warp-terminal.deb
   become: true
   when: not warp_terminal.stat.exists
+
+- name: Add Custom YAML Workflows for Warp
+  ansible.builtin.copy:
+    src: files/.local/share/warp-terminal/workflows/
+    dest: "{{ ansible_env.HOME }}/.local/share/warp-terminal/workflows/"
+    mode: u=rw,g=r,o=r

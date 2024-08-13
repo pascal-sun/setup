@@ -1,0 +1,4 @@
+name: Update packages
+command: sudo apt update && sudo apt upgrade --assume-yes && sudo snap refresh
+tags: [ ]
+description: Update APT and Snap packages

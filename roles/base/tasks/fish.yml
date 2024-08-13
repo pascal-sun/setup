@@ -18,123 +18,19 @@
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/fish
 
-# - name: Create configuration directory for fish ~/.config/fish
-#   ansible.builtin.file:
-#     path: ~/.config/fish
-#     mode: u=rwx,g=rx,o=rx
-#     state: directory
-#
-# - name: Create a local binary directory ~/.local/bin
-#   ansible.builtin.file:
-#     path: ~/.local/bin
-#     mode: u=rwx,g=rx,o=rx
-#     state: directory
-#
-# - name: Add .local/bin to PATH with fish
+
+# # fish abbreviations
+# # (https://fishshell.com/docs/current/cmds/abbr.html)
+# - name: Add ls abbreviation
 #   ansible.builtin.lineinfile:
 #     path: ~/.config/fish/config.fish
 #     create: true
-#     line: fish_add_path ~/.local/bin
+#     line: abbr --add ls lsd
 #     mode: u=rw,g=r,o=r
-
-# https://github.com/jorgebucaran/fisher#installation
-- name: Install Fisher plugin for fish
-  block:
-    - name: Check if Fisher plugin is installed
-      ansible.builtin.shell: functions -q fisher
-      args:
-        executable: /usr/bin/fish
-      register: fisher
-      changed_when: false
-      failed_when: false
-
-    - name: Download Fisher plugin
-      ansible.builtin.get_url:
-        url: "https://raw.githubusercontent.com/\
-        jorgebucaran/fisher/main/functions/fisher.fish"
-        dest: /tmp/fisher.fish
-        mode: u=rw,g=r,o=r
-      when: fisher.rc != 0
-
-    - name: Install Fisher plugin
-      ansible.builtin.shell: >-
-        source /tmp/fisher.fish && \
-        fisher install jorgebucaran/fisher
-      args:
-        executable: /usr/bin/fish
-      changed_when: true
-      when: fisher.rc != 0
-
-# # Comented, as fzf is not compatible with Warp
-# # https://github.com/PatrickF1/fzf.fish#installation
-# - name: Install fzf plugin for fish
-#   block:
-#     - name: Check if fzf plugin is installed
-#       ansible.builtin.shell: fisher list fzf
-#       args:
-#         executable: /usr/bin/fish
-#       register: fzf
-#       changed_when: false
-#       failed_when: false
 #
-#     # fuzzy finder
-#     # (https://github.com/junegunn/fzf#using-linux-package-managers)
-#     - name: Download fzf
-#       ansible.builtin.git:
-#         depth: 1
-#         dest: ~/.fzf
-#         repo: https://github.com/junegunn/fzf.git
-#         version: "HEAD"  # noqa: latest
-#
-#     - name: Install fzf
-#       ansible.builtin.command: bash ~/.fzf/install
-#       changed_when: true
-#       when: fzf.rc != 0
-#
-#     - name: Install fzf plugin for fish
-#       ansible.builtin.shell: fisher install PatrickF1/fzf.fish
-#       args:
-#         executable: /usr/bin/fish
-#       register: result
-#       changed_when: "'Installed 1 plugin/s' in result.stdout"
-
-# fish abbreviations
-# (https://fishshell.com/docs/current/cmds/abbr.html)
-- name: Add ls abbreviation
-  ansible.builtin.lineinfile:
-    path: ~/.config/fish/config.fish
-    create: true
-    line: abbr --add ls lsd
-    mode: u=rw,g=r,o=r
-
-- name: Add ll abbreviation
-  ansible.builtin.lineinfile:
-    path: ~/.config/fish/config.fish
-    create: true
-    line: abbr --add ll lsd --almost-all --group-directories-first -l
-    mode: u=rw,g=r,o=r
-
-- name: Add cat abbreviation
-  ansible.builtin.lineinfile:
-    path: ~/.config/fish/config.fish
-    create: true
-    line: abbr --add cat bat --paging=never
-    mode: u=rw,g=r,o=r
-
-- name: Add batlog abbreviation
-  ansible.builtin.lineinfile:
-    path: ~/.config/fish/config.fish
-    create: true
-    line: abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
-    mode: u=rw,g=r,o=r
-
-- name: Add update abbreviation
-  ansible.builtin.lineinfile:
-    path: ~/.config/fish/config.fish
-    create: true
-    line: >-
-      abbr --add update "
-      sudo apt update &&
-      sudo apt upgrade --assume-yes &&
-      sudo snap refresh"
-    mode: u=rw,g=r,o=r
+# - name: Add ll abbreviation
+#   ansible.builtin.lineinfile:
+#     path: ~/.config/fish/config.fish
+#     create: true
+#     line: abbr --add ll lsd --almost-all --group-directories-first -l
+#     mode: u=rw,g=r,o=r

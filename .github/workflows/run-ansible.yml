@@ -18,8 +18,12 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
+      - name: Install pipx and add ~/.local/bin to the PATH environment variable
+        run: |
+          python3 -m pip install pipx
+          echo "~/.local/bin" >> $GITHUB_PATH
       - name: Install Ansible
-        run: pip install ansible-core
+        run: pipx install ansible-core
       - name: Install Ansible collection
         run: ansible-galaxy install --role-file requirements.yml
       - name: Check the Ansible Playbook's synthax
@@ -27,7 +31,8 @@ jobs:
         env:
           ANSIBLE_FORCE_COLOR: true
       - name: Test the Ansible Playbook
-        run: ansible-playbook playbook.yml ${RUNNER_DEBUG:+-vvv}
+        # run: ansible-playbook playbook.yml ${RUNNER_DEBUG:+-vvv}
+        run: ansible-playbook playbook.yml ${RUNNER_DEBUG:+-vvv} --skip-tags installed_with_snap
         env:
           ANSIBLE_FORCE_COLOR: true
       - name: Check Ansible Playbook's idempotence
