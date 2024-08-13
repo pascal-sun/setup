@@ -23,11 +23,11 @@
   ansible.builtin.pip:
     name: pipx
 
-- name: Add shell completions for pipx
-  ansible.builtin.shell: sudo pipx ensurepath
-  args:
-    executable: /usr/bin/fish
-  changed_when: true
+# - name: Add shell completions for pipx
+#   ansible.builtin.shell: pipx ensurepath
+#   args:
+#     executable: /usr/bin/fish
+#   changed_when: true
 
 - name: Check if pipx completions for fish exists
   ansible.builtin.stat:
