@@ -84,13 +84,13 @@ Python has many package and virtual environment managers:
 
 ###### Package managers
 
-- **[`pip`](https://pip.pypa.io/)** is the "default" package installer for Python, and specifies package
+- :white_check_mark: [`pip`](https://pip.pypa.io/) is the "default" package installer for Python, and specifies package
   dependencies in a `requirements.txt` file
     - :green_circle: Can be a choice for a small-to-medium-sized project, with a small number of dependencies
     - :red_circle: Do not manage dependencies conflicts
     - :red_circle: Do not manage virtual environments (need other tools, such as `virtualenv` or `venv`)
-- **[`poetry`](https://python-poetry.org/)** is a newer package manager and specifies package dependencies in
-  a `pyproject.toml` file
+- :white_check_mark: [`poetry`](https://python-poetry.org/) is a newer popular package manager and specifies package
+  dependencies in a `pyproject.toml` file
     - :green_circle: Best choice for a larger and more complex project, with a large number of dependencies
     - :green_circle: Manage virtual environments, from `poetry`'s built-in environment manager, or from external
       environment manager (such as `virtualenv` or `venv`)
@@ -110,7 +110,7 @@ Python has many package and virtual environment managers:
   curl https://pyenv.run | bash
   # Usage
   pyenv install 3.10
-  pyenv global 3.10
+  pyenv local 3.10
   ```
 
 - [`asdf`](https://asdf-vm.com/) is used to manage and **switch multiple language versions** (it's like
@@ -121,19 +121,17 @@ Python has many package and virtual environment managers:
   # Usage
   asdf plugin add python
   asdf install python 3.10.14 # need to be very specific
-  asdf global python 3.10.14
+  asdf local python 3.10.14
   ```
 
-- **[`mise`](https://mise.jdx.dev/)**, is like `asdf`, but **faster** and **easier to use** (and has additional
-  features)
+- :white_check_mark: [`mise`](https://mise.jdx.dev/), is like `asdf`, but **faster** and **easier to use** (and has
+  additional features)
   ```shell
   # Installation
   curl https://mise.run | sh
   # Usage
-  mise use --global python@3.10
+  mise use python@3.10
   ```
-
-:white_check_mark: choose `mise`, which is the best
 
 ###### Virtual environment managers
 
@@ -145,8 +143,8 @@ Python has many package and virtual environment managers:
   # Usage
   virtualenv my_env --python=python2.7
   ```
-- [`pipenv`](https://pipenv.pypa.io/)
-
+  
+- [`pipenv`](https://pipenv.pypa.io/) is a mixture with `pip` and `virtualenv`
 
 - [`venv`](https://docs.python.org/3/library/venv.html) is a standard library to **create virtual environments** (with
   less feature than `virtualenv`, such as creating virtual environments for arbitrarily installed python versions)
