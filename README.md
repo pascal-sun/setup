@@ -77,25 +77,27 @@ Therefore, the installation of `python3-venv` is not required normally (need to 
 
 ##### Why not use other package / version / virtual environment managers?
 
-Python has many package and virtual environment managers (https://dublog.net/blog/so-many-python-package-managers/
-and https://stackoverflow.com/questions/41573587/what-is-the-difference-between-venv-pyvenv-pyenv-virtualenv-virtualenvwrappe):
+Python has many package and virtual environment managers:
+
+- https://dublog.net/blog/so-many-python-package-managers/
+- https://stackoverflow.com/questions/41573587/what-is-the-difference-between-venv-pyvenv-pyenv-virtualenv-virtualenvwrappe
 
 ###### Package managers
 
-- `pip`(https://pip.pypa.io/) is the "default" package installer for Python, and specifies package
+- **[`pip`](https://pip.pypa.io/)** is the "default" package installer for Python, and specifies package
   dependencies in a `requirements.txt` file.
     - :green_circle: Can be a choice for a small-to-medium-sized project, with a small number of dependencies
     - :red_circle: Do not manage dependencies conflicts
     - :red_circle: Do not manage virtual environments (need other tools, such as `virtualenv` or `venv`)
-- `poetry`(https://python-poetry.org/) is a newer package manager and specifies package dependencies in
+- **[`poetry`](https://python-poetry.org/)** is a newer package manager and specifies package dependencies in
   a `pyproject.toml` file.
     - :green_circle: Best choice for larger and more complex project, with a large number of dependencies
     - :green_circle: Resolve dependencies conflicts...
     - :red_circle: ... but slowly
-- `pdm`(https://pdm-project.org/) and `hatch`(https://hatch.pypa.io/), very similar to `poetry` but less popular, so
+- [`pdm`](https://pdm-project.org/) and [`hatch`](https://hatch.pypa.io/), very similar to `poetry` but less popular, so
   didn't test...
-- `conda`(https://docs.conda.io) and `mamba`(https://mamba.readthedocs.io/), I'm not a data scientist so...
-- `uv`(https://astral.sh/blog/uv) is no stable for now (but keep an eye on... :eyes:)
+- [`conda`](https://docs.conda.io) and [`mamba`](https://mamba.readthedocs.io/), I'm not a data scientist so...
+- [`uv`](https://astral.sh/blog/uv) is no stable for now (but keep an eye on... :eyes:)
 
 ###### Version managers
 
