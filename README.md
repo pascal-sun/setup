@@ -85,13 +85,15 @@ Python has many package and virtual environment managers:
 ###### Package managers
 
 - **[`pip`](https://pip.pypa.io/)** is the "default" package installer for Python, and specifies package
-  dependencies in a `requirements.txt` file.
+  dependencies in a `requirements.txt` file
     - :green_circle: Can be a choice for a small-to-medium-sized project, with a small number of dependencies
     - :red_circle: Do not manage dependencies conflicts
     - :red_circle: Do not manage virtual environments (need other tools, such as `virtualenv` or `venv`)
 - **[`poetry`](https://python-poetry.org/)** is a newer package manager and specifies package dependencies in
-  a `pyproject.toml` file.
-    - :green_circle: Best choice for larger and more complex project, with a large number of dependencies
+  a `pyproject.toml` file
+    - :green_circle: Best choice for a larger and more complex project, with a large number of dependencies
+    - :green_circle: Manage virtual environments, from `poetry`'s built-in environment manager, or from external
+      environment manager (such as `virtualenv` or `venv`)
     - :green_circle: Resolve dependencies conflicts...
     - :red_circle: ... but slowly
 - [`pdm`](https://pdm-project.org/) and [`hatch`](https://hatch.pypa.io/), very similar to `poetry` but less popular, so
@@ -122,7 +124,8 @@ Python has many package and virtual environment managers:
   asdf global python 3.10.14
   ```
 
-- [`mise`](https://mise.jdx.dev/), is like `asdf`, but **faster** and **easier to use** (and has additional features)
+- **[`mise`](https://mise.jdx.dev/)**, is like `asdf`, but **faster** and **easier to use** (and has additional
+  features)
   ```shell
   # Installation
   curl https://mise.run | sh
@@ -134,7 +137,7 @@ Python has many package and virtual environment managers:
 
 ###### Virtual environment managers
 
-- [`virtualenv`](https://virtualenv.pypa.io/) is a popular tool maintained by PyPA, to
+- **[`virtualenv`](https://virtualenv.pypa.io/)** is a popular tool maintained by PyPA, to
   **create virtual environments** for `python2` and `python3`
   ```shell
   # Installation
@@ -142,8 +145,8 @@ Python has many package and virtual environment managers:
   # Usage
   virtualenv my_env --python=python2.7
   ```
-
 - [`pipenv`](https://pipenv.pypa.io/)
+
 
 - [`venv`](https://docs.python.org/3/library/venv.html) is a standard library to **create virtual environments** (with
   less feature than `virtualenv`, such as creating virtual environments for arbitrarily installed python versions)
