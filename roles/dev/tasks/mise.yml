@@ -37,7 +37,7 @@
     block: |
       # Activate mise
       # https://mise.jdx.dev/getting-started.html#_2a-activate-mise
-      ~/.local/bin/mise activate fish | source
+      mise activate fish | source
 
 ################################################################################
 # Add Go

@@ -21,8 +21,17 @@
     > {{ ansible_env.HOME }}/.config/fish/completions/exegol.fish
   args:
     executable: /usr/bin/fish
+  register: result
+  failed_when: result.rc != 0
   changed_when: true
   when: not completions_exegol.stat.exists
+
+################################################################################
+# Configuration need to be done after creating a new container manually
+- name: Check if my-resources exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.exegol/my-resources"
+  register: my_resources
 
 # Custom wordlists
 - name: Create wordlists directory
@@ -30,22 +39,19 @@
     path: "{{ ansible_env.HOME }}/.exegol/my-resources/wordlists"
     mode: u=rwx,g=rx,o=rx
     state: directory
+  when: my_resources.stat.exists
 
-- name: Download onelistforallmicro.txt
+- name: Download OneListForAll wordlists
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/\
-    six2dez/OneListForAll/main/onelistforallmicro.txt"
+    six2dez/OneListForAll/main/{{ item }}"
     dest: "{{ ansible_env.HOME }}/.exegol/my-resources/\
-    wordlists/onelistforallmicro.txt"
+    wordlists/{{ item }}"
     mode: u=rw,g=r,o=r
-
-- name: Download onelistforallshort.txt
-  ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/\
-    six2dez/OneListForAll/main/onelistforallshort.txt"
-    dest: "{{ ansible_env.HOME }}/.exegol/my-resources/\
-    wordlists/onelistforallshort.txt"
-    mode: u=rw,g=r,o=r
+  loop:
+    - onelistforallmicro.txt
+    - onelistforallshort.txt
+  when: my_resources.stat.exists
 
 # User setup
 # https://exegol.readthedocs.io/en/latest/exegol-image/my-resources.html#user-setup
@@ -54,6 +60,7 @@
     src: files/.exegol/my-resources/setup/config/
     dest: "{{ ansible_env.HOME }}/.exegol/my-resources/setup/config/"
     mode: u=rw,g=r,o=r
+  when: my_resources.stat.exists
 
 - name: Update load_user_setup.sh file
   ansible.builtin.blockinfile:
@@ -76,3 +83,4 @@
       cp -r /opt/my-resources/wordlists/ /usr/share/wordlists/my-wordlists/
     marker: "# {mark} ANSIBLE MANAGED BLOCK: Copy configuration file"
     prepend_newline: true
+  when: my_resources.stat.exists

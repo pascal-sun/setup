@@ -1,8 +1,9 @@
 ---
 - name: Install fish shell
   ansible.builtin.import_tasks: fish.yml
-- name: Install Warp
-  ansible.builtin.import_tasks: warp.yml
+# Remove for now, Warp is not adapted with fish...
+# - name: Install Warp
+#   ansible.builtin.import_tasks: warp.yml
 - name: Install API and Snap packages
   ansible.builtin.import_tasks: packages.yml
 - name: Install Regolith

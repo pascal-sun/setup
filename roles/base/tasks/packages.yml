@@ -44,7 +44,9 @@
     > {{ ansible_env.HOME }}/.config/fish/completions/pipx.fish
   args:
     executable: /usr/bin/fish
+  register: result
   changed_when: true
+  failed_when: result.rc != 0
   when: not completions_pipx.stat.exists
 
 # Cheatsheets for console commands
