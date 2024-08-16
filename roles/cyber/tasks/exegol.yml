@@ -25,6 +25,12 @@
   when: not completions_exegol.stat.exists
 
 # Custom wordlists
+- name: Create wordlists directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.exegol/my-resources/wordlists"
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+
 - name: Download onelistforallmicro.txt
   ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/\
