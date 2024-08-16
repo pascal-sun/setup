@@ -27,9 +27,9 @@
 # Custom wordlists
 - name: Download onelistforallmicro.txt
   ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/
+    url: "https://raw.githubusercontent.com/\
     six2dez/OneListForAll/main/onelistforallmicro.txt"
-    dest: "{{ ansible_env.HOME }}/.exegol/my-resources/
+    dest: "{{ ansible_env.HOME }}/.exegol/my-resources/\
     wordlists/onelistforallmicro.txt"
     mode: u=rw,g=r,o=r
 
