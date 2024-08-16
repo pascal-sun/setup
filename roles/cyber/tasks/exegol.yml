@@ -1,0 +1,72 @@
+---
+################################################################################
+# Exegol: hacking environment, powerful and yet simple
+
+# Installation
+# https://exegol.readthedocs.io/en/latest/getting-started/install.html
+- name: Install exegol
+  community.general.pipx:
+    name: exegol
+
+# Completion
+# https://exegol.readthedocs.io/en/latest/getting-started/install.html#optional-using-exegol-auto-completion
+- name: Check if exegol completions for fish exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/fish/completions/exegol.fish"
+  register: completions_exegol
+
+- name: Add shell completions for exegol
+  ansible.builtin.shell: >
+    register-python-argcomplete --no-defaults --shell fish exegol
+    > {{ ansible_env.HOME }}/.config/fish/completions/exegol.fish
+  args:
+    executable: /usr/bin/fish
+  changed_when: true
+  when: not completions_exegol.stat.exists
+
+# Custom wordlists
+- name: Download onelistforallmicro.txt
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/
+    six2dez/OneListForAll/main/onelistforallmicro.txt"
+    dest: "{{ ansible_env.HOME }}/.exegol/my-resources/
+    wordlists/onelistforallmicro.txt"
+    mode: u=rw,g=r,o=r
+
+- name: Download onelistforallshort.txt
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/\
+    six2dez/OneListForAll/main/onelistforallshort.txt"
+    dest: "{{ ansible_env.HOME }}/.exegol/my-resources/\
+    wordlists/onelistforallshort.txt"
+    mode: u=rw,g=r,o=r
+
+# User setup
+# https://exegol.readthedocs.io/en/latest/exegol-image/my-resources.html#user-setup
+- name: Copy configuration files
+  ansible.builtin.copy:
+    src: files/.exegol/my-resources/setup/config/
+    dest: "{{ ansible_env.HOME }}/.exegol/my-resources/setup/config/"
+    mode: u=rw,g=r,o=r
+
+- name: Update load_user_setup.sh file
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.exegol/my-resources/setup/load_user_setup.sh"
+    block: |
+      # feroxbuster
+      mkdir -p /root/.config/feroxbuster
+      cp /opt/my-resources/setup/config/ferox-config.toml \
+      /root/.config/feroxbuster/ferox-config.toml
+
+      # ffuf
+      cp /opt/my-resources/setup/config/ffuf-config.toml /root/.ffufrc
+
+      # nuclei
+      mkdir -p /root/.config/nuclei
+      cp /opt/my-resources/setup/config/nuclei-config.yaml \
+      /root/.config/nuclei/config.yaml
+
+      # wordlists
+      cp -r /opt/my-resources/wordlists/ /usr/share/wordlists/my-wordlists/
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: Copy configuration file"
+    prepend_newline: true

@@ -1,0 +1,5 @@
+---
+- name: Install exegol
+  ansible.builtin.import_tasks: exegol.yml
+- name: Install Wireshark
+  ansible.builtin.import_tasks: wireshark.yml

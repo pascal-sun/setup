@@ -1,0 +1,47 @@
+---
+# https://regolith-desktop.com/docs/using-regolith/install/#ubuntu
+- name: Register Regolith official GPG key
+  become: true
+  ansible.builtin.get_url:
+    url: https://regolith-desktop.org/regolith.key
+    dest: /usr/share/keyrings/regolith-keyring.asc
+    mode: "0644"
+
+- name: Add Regolith repository URL
+  become: true
+  ansible.builtin.apt_repository:
+    filename: regolith
+    repo: >-
+      deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-keyring.asc]
+      https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+
+- name: Install Regolith packages
+  become: true
+  ansible.builtin.apt:
+    name:
+      - regolith-desktop
+      - regolith-session-flashback
+      - regolith-look-nord
+    state: present
+    update_cache: true
+
+- name: Install status bar indicators
+  become: true
+  ansible.builtin.apt:
+    name:
+      - i3xrocks-battery
+      - i3xrocks-cpu-usage
+      - i3xrocks-media-player
+      - i3xrocks-memory
+      - i3xrocks-net-traffic
+      - i3xrocks-nm-vpn
+      - i3xrocks-rofication
+      - i3xrocks-time
+    state: present
+    update_cache: true
+
+- name: Customize the status bar
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/.config/regolith3/i3xrocks/conf.d/"
+    dest: "{{ ansible_env.HOME }}/.config/regolith3/i3xrocks/conf.d/"
+    mode: u=rw,g=r,o=r

@@ -1,0 +1,6 @@
+---
+- name: Install Spotify
+  community.general.snap:
+    name: spotify
+  become: true
+  tags: installed_with_snap

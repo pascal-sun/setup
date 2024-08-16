@@ -1,0 +1,99 @@
+---
+name: 🚀 Integration
+"on":
+  push:
+  schedule:
+    - cron: "0 0 * * SUN"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  with-github-runner:
+    runs-on: ubuntu-22.04
+    name: Test with GitHub runner
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install necessary packages (git, pip and venv)
+        run: |
+          sudo apt-get install -y git python3-pip python3-venv
+      - name: Install pipx and add ~/.local/bin to the PATH environment variable
+        run: |
+          python3 -m pip install pipx
+          echo "$HOME/.local/bin" >> $GITHUB_PATH  # replace pipx ensurepath
+      - name: Install Ansible
+        run: pipx install ansible-core
+      - name: Install Ansible collection
+        run: ansible-galaxy install --role-file requirements.yml
+      - name: Check the Ansible Playbook's synthax
+        run: ansible-playbook playbook.yml --syntax-check
+        env:
+          ANSIBLE_FORCE_COLOR: true
+      - name: Test the Ansible Playbook
+        # run: ansible-playbook playbook.yml ${RUNNER_DEBUG:+-vvv}
+        run: >
+          ansible-playbook playbook.yml
+          ${RUNNER_DEBUG:+-vvv}
+          ${ACT:+--skip-tags installed_with_snap}
+        env:
+          ANSIBLE_FORCE_COLOR: true
+      - name: Check Ansible Playbook's idempotence
+        run: |
+          idempotence=$(mktemp)
+          ansible-playbook playbook.yml \
+          ${RUNNER_DEBUG:+-vvv} \
+          ${ACT:+--skip-tags installed_with_snap} | \
+          tee -a ${idempotence}
+          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && \
+          (echo 'Idempotence test: pass' && exit 0) || \
+          (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: true
+
+  with-docker-container:
+    runs-on: ubuntu-latest
+    name: Test with Docker container
+    container: ubuntu:22.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install Ubuntu desktop
+        run: |
+          apt-get update && DEBIAN_FRONTEND=noninteractive \
+          apt-get install -y ubuntu-desktop
+      - name: Upgrade packages
+        run: |
+          apt-get update && DEBIAN_FRONTEND=noninteractive \
+          apt-get upgrade -y
+      - name: Install necessary packages (git, pip and venv)
+        run: |
+          apt-get install -y git python3-pip python3-venv
+      - name: Install pipx and add ~/.local/bin to the PATH environment variable
+        run: |
+          python3 -m pip install pipx
+          echo "$HOME/.local/bin" >> $GITHUB_PATH  # replace pipx ensurepath
+      - name: Install Ansible
+        run: pipx install ansible-core
+      - name: Install Ansible collection
+        run: ansible-galaxy install --role-file requirements.yml
+      - name: Test the Ansible Playbook
+        run: >
+          ansible-playbook playbook.yml
+          ${RUNNER_DEBUG:+-vvv}
+          --skip-tags installed_with_snap
+        env:
+          ANSIBLE_FORCE_COLOR: true
+      - name: Check Ansible Playbook's idempotence
+        run: |
+          idempotence=$(mktemp)
+          ansible-playbook playbook.yml \
+          --skip-tags installed_with_snap ${RUNNER_DEBUG:+-vvv} | \
+          tee -a ${idempotence}
+          tail ${idempotence} | grep --quiet 'changed=0.*failed=0' && \
+          (echo 'Idempotence test: pass' && exit 0) || \
+          (echo 'Idempotence test: fail' && exit 1)
+        env:
+          ANSIBLE_FORCE_COLOR: true

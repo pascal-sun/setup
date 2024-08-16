@@ -1,0 +1,5 @@
+---
+- name: Install Signal
+  ansible.builtin.import_tasks: signal.yml
+- name: Install Spotify
+  ansible.builtin.import_tasks: spotify.yml

@@ -1,0 +1,8 @@
+---
+name: Highlight help messages
+command: "{{COMMAND}} -h 2>&1 | bat --plain --language=help"
+tags: ["base"]
+description: Colorize help text
+arguments:
+  - name: COMMAND
+    description: Command needed help

@@ -1,0 +1,45 @@
+# This is an example of a ffuf configuration file.
+# https://github.com/ffuf/ffuf
+
+[http]
+    headers = [
+        "X-From-Automation: Patrowl",
+        "User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/114.0"
+    ]
+    recursion = true
+
+[general]
+    colors = true
+
+[input]
+    inputmode = "clusterbomb"
+    wordlists = [
+        #"/opt/my-resources/bin/wordlists/onelistforallmicro.txt:OLFAMICRO",
+        #"/opt/my-resources/bin/wordlists/onelistforallshort.txt:OLFASHORT",
+        #"/usr/share/seclists/Discovery/Web-Content/common.txt:COMMON",
+        #"/usr/share/seclists/Discovery/Web-Content/burp-parameter-names.txt:PARAM",
+        #"/usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt:SUBDOMAINS",
+        #"/usr/share/seclists/Discovery/Web-Content/quickhits.txt:QUICKHITS",
+        #"/usr/share/seclists/Discovery/Web-Content/raft-medium-files-lowercase.txt:MEDIUMFILES",
+        #"/usr/share/seclists/Discovery/Web-Content/raft-medium-directories-lowercase.txt:MEDIUMDIR",
+        #"/usr/share/seclists/Discovery/Web-Content/raft-medium-words-lowercase.txt:MEDIUMWORDS"
+    ]
+
+[filter]
+    mode = "or"
+    lines = ""
+    regexp = ""
+    size = ""
+    status = "404"
+    time = ""
+    words = ""
+
+[matcher]
+    mode = "or"
+    lines = ""
+    regexp = ""
+    size = ""
+    status = "all"
+    time = ""
+    words = ""
+

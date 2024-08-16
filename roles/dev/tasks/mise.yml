@@ -1,0 +1,85 @@
+---
+################################################################################
+# mise: dev tools, env vars, task runner
+
+################################################################################
+# Installation
+# https://mise.jdx.dev/getting-started.html#apt
+- name: Install mise GPG key
+  become: true
+  ansible.builtin.get_url:
+    url: https://mise.jdx.dev/gpg-key.pub
+    dest: /etc/apt/keyrings/mise-archive-keyring.asc
+    mode: u=rwx,g=rx,o=rx
+
+- name: Add mise repository URL
+  become: true
+  ansible.builtin.apt_repository:
+    filename: mise
+    repo: >-
+      deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc arch=amd64]
+      https://mise.jdx.dev/deb stable main
+
+- name: Install mise package
+  become: true
+  ansible.builtin.apt:
+    name: mise
+    state: present
+    update_cache: true
+
+################################################################################
+# Activate
+# https://mise.jdx.dev/getting-started.html#_2a-activate-mise
+- name: Activate mise in fish config file
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+    prepend_newline: true
+    block: |
+      # Activate mise
+      # https://mise.jdx.dev/getting-started.html#_2a-activate-mise
+      ~/.local/bin/mise activate fish | source
+
+################################################################################
+# Add Go
+# https://mise.jdx.dev/lang/go.html
+- name: Install Go
+  ansible.builtin.command: mise use --global go
+  register: result
+  changed_when: "'installed' in result.stderr"
+
+################################################################################
+# Add Node
+# https://mise.jdx.dev/lang/node.html
+- name: Install Node
+  ansible.builtin.command: mise use --global node
+  register: result
+  changed_when: "'installed' in result.stderr"
+
+################################################################################
+# Add Python
+# https://mise.jdx.dev/lang/python.html
+# # https://mise.jdx.dev/lang/python.html#requirements
+# - name: Install dependencies to install Python
+#   become: true
+#   ansible.builtin.apt:
+#     name:
+#       - build-essential
+#       - libssl-dev
+#       - zlib1g-dev
+#       - libbz2-dev
+#       - libreadline-dev
+#       - libsqlite3-dev
+#       - libncursesw5-dev
+#       - xz-utils
+#       - tk-dev
+#       - libxml2-dev
+#       - libxmlsec1-dev
+#       - libffi-dev
+#       - liblzma-dev
+#     state: present
+#     update_cache: true
+
+- name: Install Python
+  ansible.builtin.command: mise use --global python@3.10
+  register: result
+  changed_when: "'installed' in result.stderr"

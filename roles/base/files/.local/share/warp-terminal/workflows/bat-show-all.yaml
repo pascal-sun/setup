@@ -1,0 +1,8 @@
+---
+name: Show non-printable characters
+command: bat --show-all {{FILE_NAME}}
+tags: ["base"]
+description: Show and highlight non-printable characters from a given file
+arguments:
+  - name: FILE_NAME
+    description: File to show non-printable characters

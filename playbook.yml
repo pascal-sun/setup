@@ -1,0 +1,11 @@
+---
+- name: Setup
+  hosts: localhost
+  connection: local
+
+  roles:
+    - base
+    - personal
+    - work
+    - dev
+    - cyber

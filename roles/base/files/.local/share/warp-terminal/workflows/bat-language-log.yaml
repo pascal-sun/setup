@@ -1,0 +1,10 @@
+---
+name: Monitor continuously a file
+command: tail -f {{FILE_NAME}} | bat --paging=never -l log
+tags: ["base"]
+description: >
+  Monitor continuously a given file with syntax highlighting,
+  by combining `bat` and `tail -f`
+arguments:
+  - name: FILE_NAME
+    description: File to be monitored

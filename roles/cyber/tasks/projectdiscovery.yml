@@ -1,0 +1,7 @@
+---
+# https://github.com/projectdiscovery/pdtm#installation
+- name: Install
+  ansible.builtin.command: |
+    go install github.com/projectdiscovery/pdtm/cmd/pdtm@latest
+  register: result
+  changed_when: "'go: downloading' in result.stdout"

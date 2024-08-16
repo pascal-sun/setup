@@ -1,0 +1,7 @@
+---
+- name: Install PyCharm
+  community.general.snap:
+    classic: true
+    name: pycharm-professional
+  become: true
+  tags: installed_with_snap

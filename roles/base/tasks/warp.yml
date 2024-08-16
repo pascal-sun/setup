@@ -1,0 +1,25 @@
+---
+# https://www.warp.dev/linux-terminal
+- name: Check if Warp is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/warp-terminal
+  register: warp_terminal
+
+- name: Download Warp
+  ansible.builtin.get_url:
+    url: "https://app.warp.dev/download?package=deb"
+    dest: /tmp/warp-terminal.deb
+    mode: u=rw,g=r,o=r
+  when: not warp_terminal.stat.exists
+
+- name: Install Warp package
+  ansible.builtin.apt:
+    deb: /tmp/warp-terminal.deb
+  become: true
+  when: not warp_terminal.stat.exists
+
+- name: Add Custom YAML Workflows for Warp
+  ansible.builtin.copy:
+    src: files/.local/share/warp-terminal/workflows/
+    dest: "{{ ansible_env.HOME }}/.local/share/warp-terminal/workflows/"
+    mode: u=rw,g=r,o=r

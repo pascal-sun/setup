@@ -1,0 +1,13 @@
+---
+- name: Install fish shell
+  ansible.builtin.import_tasks: fish.yml
+- name: Install Warp
+  ansible.builtin.import_tasks: warp.yml
+- name: Install API and Snap packages
+  ansible.builtin.import_tasks: packages.yml
+- name: Install Regolith
+  ansible.builtin.import_tasks: regolith.yml
+- name: Install NvChad
+  ansible.builtin.import_tasks: nvchad.yml
+- name: Install Obsidian
+  ansible.builtin.import_tasks: obsidian.yml

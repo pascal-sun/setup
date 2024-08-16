@@ -1,0 +1,7 @@
+---
+- name: Install Chromium
+  community.general.snap:
+    classic: true
+    name: chromium
+  become: true
+  tags: installed_with_snap
