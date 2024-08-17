@@ -1,6 +1,8 @@
 ---
 ################################################################################
 # fish: the user-friendly command line shell
+
+# Installation
 # https://github.com/fish-shell/fish-shell#packages-for-linux
 - name: Add fish repository from PPA
   become: true
@@ -20,24 +22,40 @@
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/fish
 
+# fish completions
 - name: Create completions directory
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.config/fish/completions"
     mode: u=rwx,g=rx,o=rx
     state: directory
 
-# # fish abbreviations
-# # (https://fishshell.com/docs/current/cmds/abbr.html)
-# - name: Add ls abbreviation
-#   ansible.builtin.lineinfile:
-#     path: ~/.config/fish/config.fish
-#     create: true
-#     line: abbr --add ls lsd
-#     mode: u=rw,g=r,o=r
-#
-# - name: Add ll abbreviation
-#   ansible.builtin.lineinfile:
-#     path: ~/.config/fish/config.fish
-#     create: true
-#     line: abbr --add ll lsd --almost-all --group-directories-first -l
-#     mode: u=rw,g=r,o=r
+# fish functions
+- name: Add custom functions
+  ansible.builtin.copy:
+    src: files/.config/fish/functions/
+    dest: "{{ ansible_env.HOME }}/.config/fish/functions"
+    mode: u=rw,g=r,o=r
+
+# fish abbreviations
+# (https://fishshell.com/docs/current/cmds/abbr.html)
+- name: Add custom abbreviations
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+    block: |
+      abbr --add update \
+      "sudo apt update --assume-yes && sudo apt upgrade --assume-yes && \
+      sudo snap refresh && \
+      pipx upgrade-all && \
+      mise upgrade --yes && \
+      fisher update"
+
+      # lsd
+      abbr --add ls "lsd"
+      abbr --add ll "lsd --almost-all --group-directories-first -l"
+
+      # bat
+      abbr --add cat "bat --paging=never"
+      abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
+
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: Custom abbreviations"
+    prepend_newline: true
