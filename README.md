@@ -210,4 +210,4 @@ But it is no stable for now (but keep an eye on... :eyes:)
     - [ ] bat-extract
     - [ ] bottom
 - [ ] Generate SSH key
-- [ ] Starship?
+- [ ] Starship? Or Pure?
