@@ -36,26 +36,29 @@
     dest: "{{ ansible_env.HOME }}/.config/fish/functions"
     mode: u=rw,g=r,o=r
 
-# fish abbreviations
-# (https://fishshell.com/docs/current/cmds/abbr.html)
-- name: Add custom abbreviations
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
-    block: |
-      abbr --add update \
-      "sudo apt update --assume-yes && sudo apt upgrade --assume-yes && \
-      sudo snap refresh && \
-      pipx upgrade-all && \
-      mise upgrade --yes && \
-      fisher update"
+# # fish abbreviations
+# # (https://fishshell.com/docs/current/cmds/abbr.html)
+# - name: Add custom abbreviations
+#   ansible.builtin.blockinfile:
+#     path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+#     block: |
+#       abbr --add update \
+#       "sudo apt update --assume-yes && sudo apt upgrade --assume-yes && \
+#       sudo snap refresh && \
+#       pipx upgrade-all && \
+#       mise upgrade --yes && \
+#       fisher update"
+#
+#       # lsd
+#       abbr --add ls "lsd"
+#       abbr --add ll "lsd --almost-all --group-directories-first -l"
+#
+#       # bat
+#       abbr --add cat "bat --paging=never"
+#       abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
+#
+#     marker: "# {mark} ANSIBLE MANAGED BLOCK: Custom abbreviations"
+#     prepend_newline: true
 
-      # lsd
-      abbr --add ls "lsd"
-      abbr --add ll "lsd --almost-all --group-directories-first -l"
-
-      # bat
-      abbr --add cat "bat --paging=never"
-      abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
-
-    marker: "# {mark} ANSIBLE MANAGED BLOCK: Custom abbreviations"
-    prepend_newline: true
+################################################################################
+# Fisher
