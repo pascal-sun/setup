@@ -64,6 +64,14 @@
 ################################################################################
 # Fisher
 
+# Prerequisite
+- name: Install curl
+  become: true
+  ansible.builtin.apt:
+    name: curl
+    state: present
+    update_cache: true
+
 # Installation
 # https://github.com/jorgebucaran/fisher#installation
 - name: Check if Fisher is already installed
