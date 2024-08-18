@@ -12,6 +12,7 @@
     name:
       - curl  # for transferring data specified with URL syntax
       - flameshot  # powerful yet simple to use screenshot software
+      - fzf  # command-line fuzzy finder
       # - htop # an interactive process viewer
       - jq  # a JSON processor
       - git

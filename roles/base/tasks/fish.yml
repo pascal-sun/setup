@@ -80,12 +80,43 @@
 
 - name: Install Fisher
   ansible.builtin.shell: >
-    curl -sL https://raw.githubusercontent.com/\
-    jorgebucaran/fisher/main/functions/fisher.fish | 
-    source && fisher install jorgebucaran/fisher
+    source /tmp/fisher.fish && fisher install jorgebucaran/fisher
   args:
     executable: /usr/bin/fish
   register: result
-  changed_when: true
+  changed_when: "'Installed 1 plugin/s' in result.stdout"
   failed_when: result.rc != 0
   when: not fisher.stat.exists
+
+################################################################################
+# Pure: pretty, minimal, and fast prompt for Fish shell inspired by sindresorhus/pure
+# https://github.com/pure-fish/pure?tab=readme-ov-file#rocket-install
+- name: Install pure-fish/pure
+  ansible.builtin.shell: fisher install pure-fish/pure
+  args:
+    executable: /usr/bin/fish
+  register: result
+  changed_when: "'Installed 1 plugin/s' in result.stdout"
+  failed_when: result.rc != 0
+
+################################################################################
+# fzf.fish: fzf plugin for Fish
+# https://github.com/PatrickF1/fzf.fish#installation
+- name: Install PatrickF1/fzf.fish
+  ansible.builtin.shell: fisher install PatrickF1/fzf.fish
+  args:
+    executable: /usr/bin/fish
+  register: result
+  changed_when: "'Installed 1 plugin/s' in result.stdout"
+  failed_when: result.rc != 0
+
+################################################################################
+# fish-abbreviation-tips: help you remember your abbreviations
+# https://github.com/Gazorby/fish-abbreviation-tips?tab=readme-ov-file#-install
+- name: Install gazorby/fish-abbreviation-tips
+  ansible.builtin.shell: fisher install gazorby/fish-abbreviation-tips
+  args:
+    executable: /usr/bin/fish
+  register: result
+  changed_when: "'Installed 1 plugin/s' in result.stdout"
+  failed_when: result.rc != 0
