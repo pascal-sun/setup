@@ -56,7 +56,7 @@
       # bat
       abbr --add cat "bat --paging=never"
       abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
-    create: True
+    create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK: Custom abbreviations"
     prepend_newline: true
 
@@ -89,7 +89,7 @@
   when: not fisher.stat.exists
 
 ################################################################################
-# Pure: pretty, minimal, and fast prompt for Fish shell inspired by sindresorhus/pure
+# Pure: pretty, minimal, and fast prompt for Fish shell
 # https://github.com/pure-fish/pure?tab=readme-ov-file#rocket-install
 - name: Install pure-fish/pure
   ansible.builtin.shell: fisher install pure-fish/pure
