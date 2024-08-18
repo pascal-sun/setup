@@ -58,6 +58,7 @@
       abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
     create: true
     marker: "# {mark} ANSIBLE MANAGED BLOCK: Custom abbreviations"
+    mode: u=rw,g=r,o=r
     prepend_newline: true
 
 ################################################################################
