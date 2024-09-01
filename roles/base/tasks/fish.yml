@@ -100,13 +100,13 @@
 ################################################################################
 # Pure: pretty, minimal, and fast prompt for Fish shell
 # https://github.com/pure-fish/pure?tab=readme-ov-file#rocket-install
-- name: Install pure-fish/pure
-  ansible.builtin.shell: fisher install pure-fish/pure
-  args:
-    executable: /usr/bin/fish
-  register: result
-  changed_when: "'Installed 1 plugin/s' in result.stdout"
-  failed_when: result.rc != 0
+# - name: Install pure-fish/pure
+#   ansible.builtin.shell: fisher install pure-fish/pure
+#   args:
+#     executable: /usr/bin/fish
+#   register: result
+#   changed_when: "'Installed 1 plugin/s' in result.stdout"
+#   failed_when: result.rc != 0
 
 ################################################################################
 # fzf.fish: fzf plugin for Fish
