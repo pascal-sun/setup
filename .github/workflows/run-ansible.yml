@@ -22,7 +22,8 @@ jobs:
           sudo apt-get install -y git python3-pip python3-venv
       - name: Install pipx and add ~/.local/bin to the PATH environment variable
         run: |
-          python3 -m pip install pipx
+          sudo apt-get install -y pipx
+          # python3 -m pip install pipx
           echo "$HOME/.local/bin" >> $GITHUB_PATH  # replace pipx ensurepath
       - name: Install Ansible
         run: pipx install ansible-core
@@ -73,7 +74,8 @@ jobs:
           apt-get install -y git python3-pip python3-venv
       - name: Install pipx and add ~/.local/bin to the PATH environment variable
         run: |
-          python3 -m pip install pipx
+          apt-get install -y pipx
+          # python3 -m pip install pipx
           echo "$HOME/.local/bin" >> $GITHUB_PATH  # replace pipx ensurepath
       - name: Install Ansible
         run: pipx install ansible-core

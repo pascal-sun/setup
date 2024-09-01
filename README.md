@@ -27,7 +27,8 @@ cd setup/
 
 ```shell
 sudo apt install -y python3-pip python3-venv
-pip install pipx
+# pip install pipx
+sudo apt install pipx
 pipx ensurepath
 pipx install ansible-core
 ```
