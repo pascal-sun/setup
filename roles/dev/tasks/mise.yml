@@ -79,7 +79,8 @@
 #     state: present
 #     update_cache: true
 
-- name: Install Python
-  ansible.builtin.command: mise use --global python@3.10
-  register: result
-  changed_when: "'installed' in result.stderr"
+# Python is already installed in Ubuntu/Debian system
+# - name: Install Python
+#   ansible.builtin.command: mise use --global python@3.10
+#   register: result
+#   changed_when: "'installed' in result.stderr"
