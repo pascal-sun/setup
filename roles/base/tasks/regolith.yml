@@ -13,14 +13,14 @@
     filename: regolith
     repo: >-
       deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-keyring.asc]
-      https://regolith-desktop.org/release-3_0-ubuntu-jammy-amd64 jammy main
+      https://regolith-desktop.org/release-3_2-ubuntu-noble-amd64 jammy main
 
 - name: Install Regolith packages
   become: true
   ansible.builtin.apt:
     name:
       - regolith-desktop
-      - regolith-session-flashback
+      - regolith-session-sway
       - regolith-look-nord
     state: present
     update_cache: true
