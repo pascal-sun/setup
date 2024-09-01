@@ -13,7 +13,7 @@
     filename: regolith
     repo: >-
       deb [arch=amd64 signed-by=/usr/share/keyrings/regolith-keyring.asc]
-      https://regolith-desktop.org/release-3_2-ubuntu-noble-amd64 jammy main
+      https://regolith-desktop.org/release-3_2-ubuntu-noble-amd64 noble main
 
 - name: Install Regolith packages
   become: true
