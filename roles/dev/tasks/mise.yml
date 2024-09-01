@@ -10,7 +10,7 @@
   ansible.builtin.get_url:
     url: https://mise.jdx.dev/gpg-key.pub
     dest: /etc/apt/keyrings/mise-archive-keyring.asc
-    mode: u=rwx,g=rx,o=rx
+    mode: u=rw,g=r,o=r
 
 - name: Add mise repository URL
   become: true

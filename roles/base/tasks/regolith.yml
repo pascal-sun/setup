@@ -5,7 +5,7 @@
   ansible.builtin.get_url:
     url: https://regolith-desktop.org/regolith.key
     dest: /usr/share/keyrings/regolith-keyring.asc
-    mode: "0644"
+    mode: u=rw,g=r,o=r
 
 - name: Add Regolith repository URL
   become: true
@@ -44,4 +44,4 @@
   ansible.builtin.copy:
     src: files/.config/regolith3/i3xrocks/conf.d/
     dest: "{{ ansible_env.HOME }}/.config/regolith3/i3xrocks/conf.d/"
-    mode: u=rw,g=r,o=r
+    mode: u=rwx,g=rx,o=rx

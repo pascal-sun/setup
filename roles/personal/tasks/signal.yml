@@ -5,7 +5,7 @@
   ansible.builtin.get_url:
     url: https://updates.signal.org/desktop/apt/keys.asc
     dest: /usr/share/keyrings/signal-desktop-keyring.asc
-    mode: u=rwx,g=rx,o=rx
+    mode: u=rw,g=r,o=r
 
 - name: Add Signal repository URL
   become: true

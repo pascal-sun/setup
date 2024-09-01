@@ -59,7 +59,7 @@
   ansible.builtin.copy:
     src: files/.exegol/my-resources/setup/config/
     dest: "{{ ansible_env.HOME }}/.exegol/my-resources/setup/config/"
-    mode: u=rw,g=r,o=r
+    mode: u=rwx,g=rx,o=rx
   when: my_resources.stat.exists
 
 - name: Update load_user_setup.sh file
