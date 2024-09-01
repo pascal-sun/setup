@@ -7,7 +7,7 @@ Ansible Playbook to setup my workstation
 
 ## How to run it?
 
-On a freshly installed **Ubuntu 22.04 LTS** (_Jammy Jellyfish_):
+On a freshly installed **Ubuntu 24.04 LTS** (_Noble Numbat_):
 
 #### Update your packages
 
