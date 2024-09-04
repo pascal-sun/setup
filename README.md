@@ -15,6 +15,14 @@ On a freshly installed **Ubuntu 24.04 LTS** (_Noble Numbat_):
 sudo apt update && sudo apt upgrade -y
 ```
 
+#### Install Ansible with `pipx`
+
+```shell
+sudo apt install pipx
+pipx ensurepath
+pipx install ansible-core
+```
+
 #### Install `git` and clone the repository
 
 ```shell
@@ -22,20 +30,6 @@ sudo apt install -y git
 git clone https://github.com/pascal-sun/setup.git
 cd setup/
 ```
-
-#### Install Ansible with `pipx`
-
-```shell
-sudo apt install -y python3-pip python3-venv
-# pip install pipx
-sudo apt install pipx
-pipx ensurepath
-pipx install ansible-core
-```
-
-> [!NOTE]  
-> `pipx` installation with `apt` is only available to Ubuntu 23.04 or above.
-> For now, install it with `pip`
 
 #### Install required Ansible Galaxy Collections
 
