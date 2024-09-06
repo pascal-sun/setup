@@ -17,15 +17,11 @@
       - jq  # a JSON processor
       - git
       # - ripgrep
+      - pipx  # install and run python applications in isolated environments
       - python3-pip  # necessary on Debian/Ubuntu systems
       - python3-venv  # necessary on Debian/Ubuntu systems
     state: present
     update_cache: true
-
-# pipx: install and run python applications in isolated environments
-- name: Install pip packages
-  ansible.builtin.pip:
-    name: pipx
 
 - name: Add ~/.local/bin to PATH
   ansible.builtin.lineinfile:
