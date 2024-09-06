@@ -44,4 +44,4 @@
   ansible.builtin.copy:
     src: files/.config/regolith3/i3xrocks/conf.d/
     dest: "{{ ansible_env.HOME }}/.config/regolith3/i3xrocks/conf.d/"
-    mode: u=rwx,g=rx,o=rx
+    mode: u=rw,g=r,o=r
