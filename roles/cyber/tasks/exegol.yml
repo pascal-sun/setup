@@ -7,6 +7,8 @@
 - name: Install exegol
   community.general.pipx:
     name: exegol
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
 
 # Completion
 # https://exegol.readthedocs.io/en/latest/getting-started/install.html#optional-using-exegol-auto-completion
