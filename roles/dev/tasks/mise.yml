@@ -40,6 +40,24 @@
       mise activate fish | source
 
 ################################################################################
+# Completion
+# https://mise.jdx.dev/cli/completion.html
+- name: Check if mise completions for fish exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/fish/completions/mise.fish"
+  register: completions_mise
+
+- name: Add shell completions for mise
+  ansible.builtin.shell: >
+    mise completion fish > {{ ansible_env.HOME }}/.config/fish/completions/mise.fish
+  args:
+    executable: /usr/bin/fish
+  register: result
+  changed_when: true
+  failed_when: result.rc != 0
+  when: not completions_pipx.stat.exists
+
+################################################################################
 # Add Go
 # https://mise.jdx.dev/lang/go.html
 - name: Install Go
