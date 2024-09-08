@@ -12,7 +12,7 @@
   loop:
     - ansible-lint
     - djlint
-    - poetry==1.8.2
+    - poetry
     - ruff
     - virtualenv
     - yamllint
