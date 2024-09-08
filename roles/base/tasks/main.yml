@@ -4,7 +4,7 @@
 # Remove for now, Warp is not adapted with fish...
 # - name: Install Warp
 #   ansible.builtin.import_tasks: warp.yml
-- name: Install API and Snap packages
+- name: Install APT and Snap packages
   ansible.builtin.import_tasks: packages.yml
 - name: Install Regolith
   ansible.builtin.import_tasks: regolith.yml
