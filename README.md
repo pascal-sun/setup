@@ -191,14 +191,10 @@ But it is no stable for now (but keep an eye on... :eyes:)
 
 ## TODO
 
-- [ ] Switch to Ubuntu 24.04
-    - [ ] Wait for Regolith
-    - [ ] Wait for GitHub Action runner
 - [ ] bottom or htop?
 - [ ] autoclean, autoremove, purge, etc. on apt packages?
 - [ ] onlyoffice, libreoffice, freeoffice, wps office, openoffice, calligra office, gnome office, .etc
 - [ ] Google Chrome
-- [ ] JetBrains Fleet
 - [ ] mise plugins:
     - [ ] act
     - [ ] bat
