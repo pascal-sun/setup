@@ -49,7 +49,8 @@
 
 - name: Add shell completions for mise
   ansible.builtin.shell: >
-    mise completion fish > {{ ansible_env.HOME }}/.config/fish/completions/mise.fish
+    mise completion fish
+    > {{ ansible_env.HOME }}/.config/fish/completions/mise.fish
   args:
     executable: /usr/bin/fish
   register: result
