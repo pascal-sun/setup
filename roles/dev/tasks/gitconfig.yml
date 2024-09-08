@@ -1,16 +1,24 @@
 ---
-- name: Add name to ~/.gitconfig
+- name: Generate SSH key
+  community.crypto.openssh_keypair:
+    path: {{ ansible_env.HOME }}/.ssh/id_ed25519
+    type: ed25519
+
+- name: Configure .gitconfig
   community.general.git_config:
-    name: user.name
+    name: "{{ item.name }}"
     scope: global
-    value: Pascal SUN
-- name: Add email to ~/.gitconfig
-  community.general.git_config:
-    name: user.email
-    scope: global
-    value: 35567930+pascal-sun@users.noreply.github.com
-- name: Add editor to ~/.gitconfig
-  community.general.git_config:
-    name: core.editor
-    scope: global
-    value: nvim
+    value: "{{ item.value }}"
+  loop:
+    - name: commit.gpgsign
+      value: true
+    - name: core.editor
+      value: nvim
+    - name: user.name
+      value: Pascal SUN
+    - name: gpg.format
+      value: ssh
+    - name: user.email
+      value: 35567930+pascal-sun@users.noreply.github.com
+    - name: user.signingkey
+      value: {{ ansible_env.HOME }}/.ssh/id_ed25519.pub
