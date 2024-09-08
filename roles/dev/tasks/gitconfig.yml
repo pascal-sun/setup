@@ -1,4 +1,10 @@
 ---
+- name: Create SSH directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+
 - name: Generate SSH key
   community.crypto.openssh_keypair:
     path: "{{ ansible_env.HOME }}/.ssh/id_ed25519"
