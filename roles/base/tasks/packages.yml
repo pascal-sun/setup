@@ -10,6 +10,7 @@
   become: true
   ansible.builtin.apt:
     name:
+      - build-essential  # essential packages for building Debian packages
       - curl  # for transferring data specified with URL syntax
       - flameshot  # powerful yet simple to use screenshot software
       - fzf  # command-line fuzzy finder
@@ -18,15 +19,16 @@
       - git
       # - ripgrep
       - pipx  # install and run python applications in isolated environments
+      - xclip  # copy and paste
     state: present
     update_cache: true
 
-- name: Add ~/.local/bin to PATH
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
-    create: true
-    line: "set PATH $PATH {{ ansible_env.HOME }}/.local/bin"
-    mode: u=rw,g=r,o=r
+# - name: Add ~/.local/bin to PATH
+#   ansible.builtin.lineinfile:
+#     path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+#     create: true
+#     line: "set PATH $PATH {{ ansible_env.HOME }}/.local/bin"
+#     mode: u=rw,g=r,o=r
 
 - name: Check if pipx completions for fish exists
   ansible.builtin.stat:
@@ -90,14 +92,15 @@
     dest: "{{ ansible_env.HOME }}/.local/bin/bat"
     state: link
 
-- name: Add MANPAGER to colorize pager for man
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
-    create: true
-    line: >-
-      set MANPAGER
-      "sh -c 'col --no-backspaces --spaces | bat --plain --language man'"
-    mode: u=rw,g=r,o=r
+# ?
+# - name: Add MANPAGER to colorize pager for man
+#   ansible.builtin.lineinfile:
+#     path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+#     create: true
+#     line: >-
+#       set MANPAGER
+#       "sh -c 'col --no-backspaces --spaces | bat --plain --language man'"
+#     mode: u=rw,g=r,o=r
 
 
 # The next gen ls command
