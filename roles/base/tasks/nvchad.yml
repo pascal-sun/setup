@@ -26,3 +26,4 @@
     depth: 1
     dest: "{{ ansible_env.HOME }}/.config/nvim"
     repo: https://github.com/NvChad/starter
+    version: "HEAD"
