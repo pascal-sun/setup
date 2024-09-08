@@ -7,13 +7,5 @@
   ansible.builtin.import_tasks: docker.yml
 - name: Setup gitconfig
   ansible.builtin.import_tasks: gitconfig.yml
-- name: Install packages with pipx
-  community.general.pipx:
-    name: "{{ item }}"
-  loop:
-    - ansible-lint
-    - ruff
-    - virtualenv
-    - yamllint
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
+- name: Install PIP packages
+  ansible.builtin.import_tasks: packages.yml

@@ -1,0 +1,36 @@
+---
+# To check Ubuntu's default installed packages:
+# - Go to https://releases.ubuntu.com/
+# - Choose the release and the version
+# - Find the .manifest file (ubuntu-XX.XX.X-desktop-amd64.manifest)
+
+################################################################################
+# Install non-default packages that requires no configuration
+- name: Install packages with pipx
+  community.general.pipx:
+    name: "{{ item }}"
+  loop:
+    - ansible-lint
+    - djlint
+    - poetry==1.8.2
+    - ruff
+    - virtualenv
+    - yamllint
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Check if poetry completions for fish exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/fish/completions/poetry.fish"
+  register: completions_poetry
+
+- name: Add shell completions for poetry
+  ansible.builtin.shell: >
+    poetry completions fish
+    > {{ ansible_env.HOME }}/.config/fish/completions/poetry.fish
+  args:
+    executable: /usr/bin/fish
+  register: result
+  changed_when: true
+  failed_when: result.rc != 0
+  when: not completions_poetry.stat.exists
