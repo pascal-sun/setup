@@ -129,3 +129,41 @@
   register: result
   changed_when: "'Installed 1 plugin/s' in result.stdout"
   failed_when: result.rc != 0
+
+################################################################################
+# Starship, the minimal, blazing-fast,
+# and infinitely customizable prompt for any shell! 
+
+# Installation
+# https://starship.rs/guide/#%F0%9F%9A%80-installation
+- name: Check if Starship is already installed
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+  register: starship
+
+- name: Download Starship
+  ansible.builtin.get_url:
+    url: "https://starship.rs/install.sh"
+    dest: /tmp/install.sh
+    mode: u=rw,g=r,o=r
+  when: not starship.stat.exists
+
+- name: Install Fisher
+  ansible.builtin.shell: >
+    sh /tmp/install.sh --force --bin-dir {{ ansible_env.HOME }}/.local/bin
+  args:
+    executable: /usr/bin/fish
+  register: result
+  changed_when: "'Starship latest install' in result.stdout"
+  failed_when: result.rc != 0
+  when: not starship.stat.exists
+
+# Setup
+- name: Activate Starship in fish config file
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
+    prepend_newline: true
+    block: |
+      # Activate starship
+      starship init fish | source
+
