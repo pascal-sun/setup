@@ -72,6 +72,13 @@
     state: present
     update_cache: true
 
+- name: Create local binary directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    mode: u=rwx,g=rx,o=rx
+    state: directory
+
+
 # Installation
 # https://github.com/jorgebucaran/fisher#installation
 - name: Check if Fisher is already installed
@@ -148,7 +155,7 @@
     mode: u=rw,g=r,o=r
   when: not starship.stat.exists
 
-- name: Install Fisher
+- name: Install Starship
   ansible.builtin.shell: >
     sh /tmp/install.sh --force --bin-dir {{ ansible_env.HOME }}/.local/bin
   args:

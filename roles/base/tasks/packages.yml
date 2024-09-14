@@ -55,12 +55,6 @@
   become: true
   tags: installed_with_snap
 
-- name: Create local binary directory
-  ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
-    mode: u=rwx,g=rx,o=rx
-    state: directory
-
 # simple, fast and user-friendly alternative to "find"
 # (https://github.com/sharkdp/fd#on-ubuntu)
 - name: Install fd, alternative to "find"
