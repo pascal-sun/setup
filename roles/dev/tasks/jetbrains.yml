@@ -21,20 +21,13 @@
     JetBrains/Toolbox/bin/jetbrains-toolbox"
   register: toolbox
 
-# - name: Download JetBrains Toolbox App
-#   ansible.builtin.get_url:
-#     url: "https://www.jetbrains.com/\
-#     toolbox-app/download/download-thanks.html?platform=linux"
-#     dest: /tmp/jetbrains-toolbox.tar.gz
-#     mode: u=rw,g=r,o=r
-#   when: not toolbox.stat.exists
-
 - name: Download and unarchive JetBrains Toolbox App
   ansible.builtin.unarchive:
     src: "https://www.jetbrains.com/\
     toolbox-app/download/download-thanks.html?platform=linux"
     dest: /tmp/jetbrains-toolbox
-    mode: u=rw,g=r,o=r
+    remote_src: yes
+    mode: u=rwx,g=rx,o=rx
   when: not toolbox.stat.exists
 
 - name: Install JetBrains Toolbox App
@@ -45,4 +38,3 @@
   changed_when: true
   failed_when: result.rc != 0
   when: not toolbox.stat.exists
-
