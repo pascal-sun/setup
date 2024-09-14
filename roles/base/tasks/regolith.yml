@@ -20,7 +20,7 @@
   ansible.builtin.apt:
     name:
       - regolith-desktop
-      - regolith-session-flashback
+      - regolith-session-sway
       - regolith-look-nord
     state: present
     update_cache: true
