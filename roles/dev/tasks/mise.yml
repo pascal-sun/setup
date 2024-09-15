@@ -33,11 +33,14 @@
 - name: Activate mise in fish config file
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
-    prepend_newline: true
     block: |
-      # Activate mise
       # https://mise.jdx.dev/getting-started.html#_2a-activate-mise
       mise activate fish | source
+    create: true
+    marker: >
+      "# {mark} ANSIBLE MANAGED BLOCK: Activate mise"
+    mode: u=rw,g=r,o=r
+    prepend_newline: true
 
 ################################################################################
 # Completion

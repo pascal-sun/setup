@@ -57,7 +57,9 @@
       abbr --add cat "bat --paging=never"
       abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
     create: true
-    marker: "# {mark} ANSIBLE MANAGED BLOCK: Custom abbreviations"
+    marker: >
+      "# {mark} ANSIBLE MANAGED BLOCK: Update APT, Snap, pipx packages and"
+      "mise, fish plugins"
     mode: u=rw,g=r,o=r
     prepend_newline: true
 
@@ -166,10 +168,14 @@
   when: not starship.stat.exists
 
 # Setup
-- name: Activate Starship in fish config file
+- name: Initialize Starship in fish
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.config/fish/config.fish"
-    prepend_newline: true
     block: |
-      # Activate starship
+      # https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship
       starship init fish | source
+    create: true
+    marker: >
+      "# {mark} ANSIBLE MANAGED BLOCK: Initialize Startship"
+    mode: u=rw,g=r,o=r
+    prepend_newline: true
