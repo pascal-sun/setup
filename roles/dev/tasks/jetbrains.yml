@@ -28,7 +28,6 @@
     dest: /tmp
     remote_src: true
     mode: u=rwx,g=rx,o=rx
-    list_files: true
   when: not toolbox.stat.exists
 
 - name: Install JetBrains Toolbox App
