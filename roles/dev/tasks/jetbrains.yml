@@ -21,17 +21,39 @@
     JetBrains/Toolbox/bin/jetbrains-toolbox"
   register: toolbox
 
+- name: Find latest JetBrains Toolbox App release
+  ansible.builtin.uri:
+    url: "https://data.services.jetbrains.com/\
+    products/releases?code=TBA&latest=true&type=release"
+    return_content: true
+  register: toolbox_release
+  when: not toolbox.stat.exists
+
+- name: Retrieve the download URL
+  ansible.builtin.set_fact:
+    browser_download_url: "{{ toolbox_release.json.TBA.0.downloads.linux.link }}"
+  when: not toolbox.stat.exists
+
+- name: Download JetBrains Toolbox App
+  ansible.builtin.get_url:
+    url: "{{ browser_download_url }}"
+    dest: /tmp/jetbrains-toolbox.tar.gz
+    mode: u=rw,g=r,o=r
+  when: not toolbox.stat.exists
+
 - name: Download and unarchive JetBrains Toolbox App
   ansible.builtin.unarchive:
-    src: "https://www.jetbrains.com/\
-    toolbox-app/download/download-thanks.html?platform=linux"
+    src: /tmp/jetbrains-toolbox.tar.gz
     dest: /tmp
+    extra_opts:
+      - --strip-components
+      - 1
     remote_src: true
     mode: u=rwx,g=rx,o=rx
   when: not toolbox.stat.exists
 
 - name: Install JetBrains Toolbox App
-  ansible.builtin.shell: /tmp/jetbrains-toolbox/jetbrains-toolbox
+  ansible.builtin.shell: /tmp/jetbrains-toolbox
   args:
     executable: /usr/bin/fish
   register: result
