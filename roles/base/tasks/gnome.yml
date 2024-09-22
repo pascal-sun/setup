@@ -1,5 +1,14 @@
 ---
 ################################################################################
+# Prerequisite
+- name: Install apt packages
+  become: true
+  ansible.builtin.apt:
+    name: python3-psutil
+    state: present
+    update_cache: true
+
+################################################################################
 # dconf is a low-level configuration system and settings management tool
 
 # Settings > Displays > Night Light
