@@ -59,7 +59,7 @@
   register: result
   changed_when: true
   failed_when: result.rc != 0
-  when: not completions_pipx.stat.exists
+  when: not completions_mise.stat.exists
 
 ################################################################################
 # Add Go
