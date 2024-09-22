@@ -1,0 +1,67 @@
+---
+################################################################################
+# dconf is a low-level configuration system and settings management tool
+
+# Settings > Displays > Night Light
+- name: Enable Night Light
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+    value: "true"
+    state: present
+
+- name: Schedule Sunset to Sunrise
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-schedule-automatic
+    value: "true"
+    state: present
+
+- name: Set Color Temperature
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/color/night-light-temperature
+    value: "uint32 2700"
+    state: present
+
+# Settings > Power
+- name: Reduce screen brightness when computer is inactive
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/idle-dim
+    value: "true"
+    state: present
+
+- name: Turn the screen off after a period of inactivity (Never)
+  community.general.dconf:
+    key: /org/gnome/desktop/session/idle-delay
+    value: "uint32 0"
+    state: present
+
+- name: Turn on power saver mode when battery power is low
+  community.general.dconf:
+    # yamllint disable-line rule:line-length
+    key: /org/gnome/settings-daemon/plugins/power/power-saver-profile-on-low-battery
+    value: "true"
+    state: present
+
+- name: Pause the computer after a period of inactivity
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type
+    value: "'suspend'"
+    state: present
+
+- name: Pause the computer after a period of inactivity (15min)
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout
+    value: "900"
+    state: present
+
+- name: Power button behavior (Power Off)
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/power-button-action
+    value: "'interactive'"
+    state: present
+
+# Settings > Keyboard
+- name: Configure keyboard layouts
+  community.general.dconf:
+    key: /org/gnome/desktop/input-sources/sources
+    value: "[('xkb', 'us+intl'), ('xkb', 'fr+azerty')]"
+    state: present
