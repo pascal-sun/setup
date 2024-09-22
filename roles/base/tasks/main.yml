@@ -1,6 +1,4 @@
 ---
-- name: Configure GNOME
-  ansible.builtin.import_tasks: gnome.yml
 - name: Install fish shell
   ansible.builtin.import_tasks: fish.yml
 # Remove for now, Warp is not adapted with fish...
@@ -14,3 +12,5 @@
   ansible.builtin.import_tasks: nvchad.yml
 - name: Install Obsidian
   ansible.builtin.import_tasks: obsidian.yml
+- name: Configure GNOME
+  ansible.builtin.import_tasks: gnome.yml
