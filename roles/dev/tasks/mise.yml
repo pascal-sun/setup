@@ -78,6 +78,14 @@
   changed_when: "'installed' in result.stderr"
 
 ################################################################################
+# Add Usage, for completions
+# https://usage.jdx.dev/cli/
+- name: Install Usage
+  ansible.builtin.command: mise use --global usage
+  register: result
+  changed_when: "'installed' in result.stderr"
+
+################################################################################
 # Add Python
 # https://mise.jdx.dev/lang/python.html
 # # https://mise.jdx.dev/lang/python.html#requirements
