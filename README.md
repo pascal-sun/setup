@@ -97,8 +97,8 @@ And that's it! :rocket:
 
 - Follow instruction
 
-  > [!WARNING]  
-  > Downloading takes a long time...
+> [!WARNING]  
+> Downloading takes a long time...
 
 ## How to test it?
 
