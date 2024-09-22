@@ -44,12 +44,11 @@
 - name: Download and unarchive JetBrains Toolbox App
   ansible.builtin.unarchive:
     src: /tmp/jetbrains-toolbox.tar.gz
-    dest: /tmp
+    dest: /tmp/jetbrains-toolbox
     extra_opts:
       - --strip-components
       - 1
     remote_src: true
-    mode: u=rwx,g=rx,o=rx
   when: not toolbox.stat.exists
 
 - name: Install JetBrains Toolbox App
