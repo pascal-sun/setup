@@ -37,7 +37,7 @@
       # https://mise.jdx.dev/getting-started.html#_2a-activate-mise
       mise activate fish | source
     create: true
-    marker: >
+    marker: >-
       # {mark} ANSIBLE MANAGED BLOCK: Activate mise
     mode: u=rw,g=r,o=r
     prepend_newline: true
