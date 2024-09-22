@@ -12,13 +12,13 @@ On an **Ubuntu 24.04 LTS** (_Noble Numbat_):
 #### Update your packages
 
 ```shell
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade --yes
 ```
 
 #### Install Ansible with `pipx`
 
 ```shell
-sudo apt install pipx
+sudo apt install pipx --yes
 pipx ensurepath
 pipx install ansible-core
 ```
@@ -26,7 +26,7 @@ pipx install ansible-core
 #### Install `git` and clone the repository
 
 ```shell
-sudo apt install -y git
+sudo apt install git --yes
 git clone https://github.com/pascal-sun/setup.git
 cd setup/
 ```
@@ -34,7 +34,7 @@ cd setup/
 #### Install required Ansible Galaxy Collections
 
 ```shell
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install --role-file requirements.yml
 ```
 
 #### Run Ansible Playbook
@@ -51,28 +51,25 @@ And that's it! :rocket:
 
 ## Post-installation manual steps
 
-### BASE: Firefox Extensions
+### Firefox Extensions
 
 - [Bitwarden](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/): At home, at work, or on the go, Bitwarden easily secures all your passwords, passkeys, and sensitive information.
 - [Sidebery](https://addons.mozilla.org/en-US/firefox/addon/sidebery/): Vertical tabs tree and bookmarks in sidebar with advanced containers configuration, grouping and many other features.
 - [Vimium](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/): The Hacker's Browser. Vimium provides keyboard shortcuts for navigation and control in the spirit of Vim.
 
-### BASE: NvChad
+### NvChad
 
 - Install, clean and plugins:
-
   ```shell
   nvim
   :Lazy sync
   ```
-
 - Or from command-line:
-
   ```shell
   nvim --headless "+Lazy! sync" +qa
   ```
 
-### DEV: GitHub SSH
+### GitHub SSH key
 
 - Copy the SSH public key to your clipboard:
   ```shell
@@ -81,20 +78,18 @@ And that's it! :rocket:
 - Go to [GitHub](https://github.com), then Settings > SSH and GPG keys > New SSH key
 - Add Authentication and Signing keys, and paste the SSH public key
 
-### DEV: JetBrains
+### JetBrains
 
 - Launch Toolbox with app launcher: `super`+`space` and search `JetBrains Toolbox`
 - _(or from terminal: `$HOME/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox`)_
 - Install desired tools, such as `PyCharm Professional`
 
-### CYBER: Exegol
+### Exegol
 
 - Install resources (~1GB) and `full` image (~60GB):
-
   ```shell
   exegol install
   ```
-
 - Follow instruction
 
 > [!WARNING]  
