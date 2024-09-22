@@ -7,7 +7,7 @@ Ansible Playbook to setup my workstation
 
 ## How to run it?
 
-On a freshly installed **Ubuntu 24.04 LTS** (_Noble Numbat_):
+On an **Ubuntu 24.04 LTS** (_Noble Numbat_):
 
 #### Update your packages
 
@@ -49,6 +49,24 @@ BECOME password: <Enter your password>
 
 And that's it! :rocket:
 
+## Post-installation manual steps
+
+### DEV: JetBrains
+
+- Launch Toolbox with app launcher: `super`+`space` and search `JetBrains Toolbox`
+- _(or from terminal: `$HOME/.local/share/JetBrains/Toolbox/bin/jetbrains-toolbox`)_
+- Install desired tools, such as `PyCharm Professional`
+
+### CYBER: Exegol
+
+- Install resources (~1GB) and `full` image (~60GB):
+  ```shell
+  exegol install
+  ```
+- Follow instruction
+  > [!WARNING]  
+  > Downloading takes a long time...
+
 ## How to test it?
 
 #### With [`act`](https://nektosact.com/)
@@ -57,6 +75,14 @@ And that's it! :rocket:
 act --env RUNNER_DEBUG=1 --job with-github-runner 
 act --env RUNNER_DEBUG=1 --job with-docker-container
 ```
+
+> [!CAUTION]
+> With act, it does not possible to use `snapd`. Therefore packages intalled with `snap`
+> (tagged with `installed_with_snap`) are skipped.
+
+#### With CI `run-ansible`
+
+Just push the code, and check GitHub Action
 
 ## Architecture decision record
 
