@@ -38,7 +38,7 @@
       mise activate fish | source
     create: true
     marker: >
-      "# {mark} ANSIBLE MANAGED BLOCK: Activate mise"
+      # {mark} ANSIBLE MANAGED BLOCK: Activate mise
     mode: u=rw,g=r,o=r
     prepend_newline: true
 

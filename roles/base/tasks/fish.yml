@@ -58,8 +58,8 @@
       abbr --add batlog --set-cursor "tail -f % | bat --paging=never -l log"
     create: true
     marker: >
-      "# {mark} ANSIBLE MANAGED BLOCK: Update APT, Snap, pipx packages and"
-      "mise, fish plugins"
+      # {mark} ANSIBLE MANAGED BLOCK: Update APT, Snap, pipx packages and
+      mise, fish plugins
     mode: u=rw,g=r,o=r
     prepend_newline: true
 
@@ -176,6 +176,6 @@
       starship init fish | source
     create: true
     marker: >
-      "# {mark} ANSIBLE MANAGED BLOCK: Initialize Startship"
+      # {mark} ANSIBLE MANAGED BLOCK: Initialize Startship
     mode: u=rw,g=r,o=r
     prepend_newline: true

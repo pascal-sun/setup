@@ -83,6 +83,7 @@
 
       # wordlists
       cp -r /opt/my-resources/wordlists/ /usr/share/wordlists/my-wordlists/
-    marker: "# {mark} ANSIBLE MANAGED BLOCK: Copy configuration file"
+    marker: >
+      # {mark} ANSIBLE MANAGED BLOCK: Copy configuration file
     prepend_newline: true
   when: my_resources.stat.exists
