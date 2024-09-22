@@ -51,6 +51,36 @@ And that's it! :rocket:
 
 ## Post-installation manual steps
 
+### BASE: Firefox Extensions
+
+- [Bitwarden](https://addons.mozilla.org/en-US/firefox/addon/bitwarden-password-manager/): At home, at work, or on the go, Bitwarden easily secures all your passwords, passkeys, and sensitive information.
+- [Sidebery](https://addons.mozilla.org/en-US/firefox/addon/sidebery/): Vertical tabs tree and bookmarks in sidebar with advanced containers configuration, grouping and many other features.
+- [Vimium](https://addons.mozilla.org/en-US/firefox/addon/vimium-ff/): The Hacker's Browser. Vimium provides keyboard shortcuts for navigation and control in the spirit of Vim.
+
+### BASE: NvChad
+
+- Install, clean and plugins:
+
+  ```shell
+  nvim
+  :Lazy sync
+  ```
+
+- Or from command-line:
+
+  ```shell
+  nvim --headless "+Lazy! sync" +qa
+  ```
+
+### DEV: GitHub SSH
+
+- Copy the SSH public key to your clipboard:
+  ```shell
+  cat ~/.ssh/id_ed25519.pub
+  ```
+- Go to [GitHub](https://github.com), then Settings > SSH and GPG keys > New SSH key
+- Add Authentication and Signing keys, and paste the SSH public key
+
 ### DEV: JetBrains
 
 - Launch Toolbox with app launcher: `super`+`space` and search `JetBrains Toolbox`
@@ -60,10 +90,13 @@ And that's it! :rocket:
 ### CYBER: Exegol
 
 - Install resources (~1GB) and `full` image (~60GB):
+
   ```shell
   exegol install
   ```
+
 - Follow instruction
+
   > [!WARNING]  
   > Downloading takes a long time...
 
