@@ -54,3 +54,4 @@
   changed_when: true
   failed_when: result.rc != 0
   when: not toolbox.stat.exists
+  tags: installed_with_snap
