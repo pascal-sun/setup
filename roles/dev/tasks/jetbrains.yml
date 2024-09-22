@@ -1,12 +1,6 @@
 ---
 ################################################################################
-# - name: Install PyCharm
-#   community.general.snap:
-#     classic: true
-#     name: pycharm-professional
-#   become: true
-#   tags: installed_with_snap
-
+# Prerequisite
 - name: Install apt packages
   become: true
   ansible.builtin.apt:
@@ -14,7 +8,8 @@
     state: present
     update_cache: true
 
-
+################################################################################
+# Install JetBrains Toolbox App
 - name: Check if JetBrains Toolbox App is already installed
   ansible.builtin.stat:
     path: "{{ ansible_env.HOME }}/.local/share/\
@@ -31,17 +26,17 @@
 
 - name: Retrieve the download URL
   ansible.builtin.set_fact:
-    browser_download_url: "{{ toolbox_release.json.TBA.0.downloads.linux.link }}"
+    download_url: "{{ toolbox_release.json.TBA.0.downloads.linux.link }}"
   when: not toolbox.stat.exists
 
 - name: Download JetBrains Toolbox App
   ansible.builtin.get_url:
-    url: "{{ browser_download_url }}"
+    url: "{{ download_url }}"
     dest: /tmp/jetbrains-toolbox.tar.gz
     mode: u=rw,g=r,o=r
   when: not toolbox.stat.exists
 
-- name: Download and unarchive JetBrains Toolbox App
+- name: Unarchive JetBrains Toolbox App
   ansible.builtin.unarchive:
     src: /tmp/jetbrains-toolbox.tar.gz
     dest: /tmp
