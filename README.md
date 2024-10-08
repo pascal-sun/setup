@@ -255,3 +255,4 @@ But it is no stable for now (but keep an eye on... :eyes:)
     - [ ] bat-extract
     - [ ] bottom
 - [ ] Starship? Or Pure?
+- [ ] Add flameshot shortcut
