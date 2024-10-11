@@ -256,3 +256,4 @@ But it is no stable for now (but keep an eye on... :eyes:)
     - [ ] bottom
 - [ ] Starship? Or Pure?
 - [ ] Add flameshot shortcut
+- [ ] mypy
