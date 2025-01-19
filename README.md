@@ -260,3 +260,4 @@ But it is no stable for now (but keep an eye on... :eyes:)
 - [ ] mise with python2 (https://github.com/pyenv/pyenv/wiki/Common-build-problems#error-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib)
 - [ ] virtualenv not usefull with pipx (install with python2)
 - [ ] ghostty
+- [ ] flatpak
